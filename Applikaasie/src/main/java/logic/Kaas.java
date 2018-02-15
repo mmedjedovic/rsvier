@@ -3,9 +3,9 @@ package logic;
 public class Kaas {
 	
 	private final String naam;
-	private final double prijsInKg;
-	private final double vooraadInKg;
-	private final int kaasId;
+	private final Double prijsInKg;
+	private final Double vooraadInKg;
+	private final Integer kaasId;
 	
 	private Kaas(KaasBuilder kaasBuilder) {
 		this.naam = kaasBuilder.naam;
@@ -17,25 +17,25 @@ public class Kaas {
 	public static class KaasBuilder {
 		
 		private final String naam;
-		private double prijsInKg = 0.0;
-		private double vooraadInKg = 0.0;
-		private int kaasId = -1;
+		private Double prijsInKg = 0.0;
+		private Double vooraadInKg = 0.0;
+		private Integer kaasId = -1;
 		
 		public KaasBuilder(String naam) {
 			this.naam = naam;
 		}
 		
-		public KaasBuilder prijsInKg(double prijsInKg) {
+		public KaasBuilder prijsInKg(Double prijsInKg) {
 			this.prijsInKg = prijsInKg;
 			return this;
 		}
 		
-		public KaasBuilder vooraadInKg(double vooraadInKg) {
+		public KaasBuilder vooraadInKg(Double vooraadInKg) {
 			this.vooraadInKg = vooraadInKg;
 			return this;
 		}
 		
-		public KaasBuilder kaasId(int kaasId) {
+		public KaasBuilder kaasId(Integer kaasId) {
 			this.kaasId = kaasId;
 			return this;
 		}
@@ -49,15 +49,15 @@ public class Kaas {
 		return naam;
 	}
 
-	public double getPrijsInKg() {
+	public Double getPrijsInKg() {
 		return prijsInKg;
 	}
 
-	public double getVooraadInKg() {
+	public Double getVooraadInKg() {
 		return vooraadInKg;
 	}
 
-	public int getKaasId() {
+	public Integer getKaasId() {
 		return kaasId;
 	}
 	
