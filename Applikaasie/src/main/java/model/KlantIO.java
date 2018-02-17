@@ -12,6 +12,7 @@ import logic.Klant;
 
 public class KlantIO {
 	
+	//een nieuwe klant in databse maken
 	public static void maakNieuweKlant(Klant klant) throws SQLException {
 		Connection con = Connector.getInstance().getConnection();
 		String sql = "INSERT INTO klant (voornaam, achternaam, geboortedatum) VALUES (?, ?, ?)";
@@ -25,6 +26,16 @@ public class KlantIO {
 		con.close();
 	}
 	
+	//een speciefiek klant uit databse te halen
+	public static ArrayList<Klant> getKlant(Integer klantId) throws SQLException {
+		Connection con = Connector.getInstance().getConnection();
+		String sql = "SELECT * FROM klant WHERE klant_id = ?";
+		Statement st = con.createStatement();
+		ResultSet rs = st.executeQuery(sql);
+		return maakKlantenList(rs);
+	}
+	
+	//alle klanten uit database te halen
 	public static ArrayList<Klant> getKlanten() throws SQLException {
 		Connection con = Connector.getInstance().getConnection();
 		String sql = "SELECT * FROM klant";
@@ -35,6 +46,7 @@ public class KlantIO {
 		return maakKlantenList(rs);
 	}
 	
+	//hulp methode om lijst van klanten te maken
 	private static ArrayList<Klant> maakKlantenList(ResultSet rs) throws SQLException {
 		ArrayList<Klant> klantList = new ArrayList<Klant>();
 		while(rs.next()) {

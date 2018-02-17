@@ -7,7 +7,7 @@ import java.util.HashMap;
 
 public class Bestelling {
 	
-	private final HashMap<String, Double> besteldeKazenList;
+	private final HashMap<Kaas, BigDecimal> besteldeKazenList;
 	private final BigDecimal totaalPrijs;
 	private final Klant klant;
 	private final Date bestellingDate;
@@ -26,7 +26,7 @@ public class Bestelling {
 	public static class BestellingBuilder {
 		
 		private final Klant klant;
-		private HashMap<String, Double> besteldeKazenList;
+		private HashMap<Kaas, BigDecimal> besteldeKazenList;
 		private BigDecimal totaalPrijs;
 		private Date bestellingDate;
 		private Status status;
@@ -36,7 +36,7 @@ public class Bestelling {
 			this.klant = klant;
 		}
 		
-		public BestellingBuilder besteldeKazenList(HashMap<String, Double> besteldeKazenList) {
+		public BestellingBuilder besteldeKazenList(HashMap<Kaas, BigDecimal> besteldeKazenList) {
 			this.besteldeKazenList = besteldeKazenList;
 			return this;
 		}
@@ -62,7 +62,7 @@ public class Bestelling {
 		
 	}
 
-	public HashMap<String, Double> getBesteldeKazenList() {
+	public HashMap<Kaas, BigDecimal> getBesteldeKazenList() {
 		return besteldeKazenList;
 	}
 

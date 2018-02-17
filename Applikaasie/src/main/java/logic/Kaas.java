@@ -1,14 +1,16 @@
 package logic;
 
+import java.math.BigDecimal;
+
 public class Kaas {
 	
-	private final String naam;
-	private final Double prijsInKg;
-	private final Double vooraadInKg;
+	private final String kaasNaam;
+	private final BigDecimal prijsInKg;
+	private final BigDecimal vooraadInKg;
 	private final Integer kaasId;
 	
 	private Kaas(KaasBuilder kaasBuilder) {
-		this.naam = kaasBuilder.naam;
+		this.kaasNaam = kaasBuilder.kaasNaam;
 		this.prijsInKg = kaasBuilder.prijsInKg;
 		this.vooraadInKg = kaasBuilder.vooraadInKg;
 		this.kaasId = kaasBuilder.kaasId;
@@ -16,21 +18,21 @@ public class Kaas {
 	
 	public static class KaasBuilder {
 		
-		private final String naam;
-		private Double prijsInKg = 0.0;
-		private Double vooraadInKg = 0.0;
+		private final String kaasNaam;
+		private BigDecimal prijsInKg = new BigDecimal(0);
+		private BigDecimal vooraadInKg = new BigDecimal(0);
 		private Integer kaasId = -1;
 		
-		public KaasBuilder(String naam) {
-			this.naam = naam;
+		public KaasBuilder(String kaasNaam) {
+			this.kaasNaam = kaasNaam;
 		}
 		
-		public KaasBuilder prijsInKg(Double prijsInKg) {
+		public KaasBuilder prijsInKg(BigDecimal prijsInKg) {
 			this.prijsInKg = prijsInKg;
 			return this;
 		}
 		
-		public KaasBuilder vooraadInKg(Double vooraadInKg) {
+		public KaasBuilder vooraadInKg(BigDecimal vooraadInKg) {
 			this.vooraadInKg = vooraadInKg;
 			return this;
 		}
@@ -46,14 +48,14 @@ public class Kaas {
 	}
 
 	public String getNaam() {
-		return naam;
+		return kaasNaam;
 	}
 
-	public Double getPrijsInKg() {
+	public BigDecimal getPrijsInKg() {
 		return prijsInKg;
 	}
 
-	public Double getVooraadInKg() {
+	public BigDecimal getVooraadInKg() {
 		return vooraadInKg;
 	}
 

@@ -1,31 +1,37 @@
 package model;
 
-public class BestellingDetailsIO {
+import java.math.BigDecimal;
+import java.math.MathContext;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 
+import logic.Bestelling;
+import logic.Kaas;
+
+public class BestellingDetailsIO {
 	
-	
-	
-	
-	
-	
-	
-	
-	/**
-	//voor bestellingdetails
-	HashMap<String, Double> besteldeKazen = bestelling.getBesteldeKazenList(); 
-	for(Map.Entry<String, Double> entry: besteldeKazen.entrySet()) {
-		String kaas = entry.getKey();
-		double kg = entry.getValue();
-		ps.setInt(1, bestellingNummer);
-		ps.setString(2, kaas);
-		ps.setDouble(3, kg);
-		ps.setInt(4, klantId);
-		ps.setString(5, status);
-		ps.executeUpdate();
+	//besteling in database opslaan in tabel van bestelling_details 
+	public static void maakBestellingDetails(Connection con, Bestelling bestelling, Integer bestellingId) throws SQLException {
+		String sql = "INSERT INTO bestelling_details(bestelling_id, kaas_id, hoeveelheid_in_kg, prijs) VLUES(?,?,?,?)";
+		PreparedStatement ps = con.prepareStatement(sql);
+		HashMap<Kaas, BigDecimal> kazenList = bestelling.getBesteldeKazenList();
+		for(Map.Entry<Kaas, BigDecimal> entry: kazenList.entrySet()) {
+			Kaas kaas = entry.getKey();
+			BigDecimal hoeveelheidInKg = entry.getValue();
+			BigDecimal totaalPrijs = hoeveelheidInKg.multiply(kaas.getPrijsInKg(), new MathContext(4));
+			ps.setInt(1, bestellingId);
+			ps.setInt(2, kaas.getKaasId());
+			ps.setBigDecimal(3, hoeveelheidInKg);
+			ps.setBigDecimal(4, totaalPrijs);
+			ps.executeUpdate();
+			BigDecimal huidigeVooraad = KaasIO.getVooraadVanKaas(kaas.getKaasId(), con);
+			BigDecimal nieuweVooraad = huidigeVooraad.subtract(hoeveelheidInKg);
+			KaasIO.vooraadAanpassen(kaas.getKaasId(), nieuweVooraad, con);
+		}
 	}
-	ps.close();
-	con.close();
-}*/
 	
 	
 	
