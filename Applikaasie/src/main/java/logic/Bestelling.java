@@ -12,6 +12,7 @@ public class Bestelling {
 	private final Klant klant;
 	private final Date bestellingDate;
 	private final Status status;
+	private final Integer bestellingId;
 	
 	public enum Status {OPEN, GESLOTEN}
 	
@@ -21,6 +22,7 @@ public class Bestelling {
 		this.klant = bestellingBuilder.klant;
 		this.bestellingDate = bestellingBuilder.bestellingDate;
 		this.status = bestellingBuilder.status;
+		this.bestellingId = bestellingBuilder.bestellingId;
 	}
 	
 	public static class BestellingBuilder {
@@ -30,6 +32,7 @@ public class Bestelling {
 		private BigDecimal totaalPrijs;
 		private Date bestellingDate;
 		private Status status;
+		private Integer bestellingId = -1;
 		
 		
 		public BestellingBuilder(Klant klant) {
@@ -53,6 +56,11 @@ public class Bestelling {
 		
 		public BestellingBuilder status(Status status) {
 			this.status = status;
+			return this;
+		}
+		
+		public BestellingBuilder bestellingId(Integer bestellingId) {
+			this.bestellingId = bestellingId;
 			return this;
 		}
 		
@@ -81,5 +89,10 @@ public class Bestelling {
 	public Status getStatus() {
 		return status;
 	}
+
+	public Integer getBestellingId() {
+		return bestellingId;
+	}
 	
+
 }

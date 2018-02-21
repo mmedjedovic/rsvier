@@ -15,7 +15,7 @@ public class BestellingDetailsIO {
 	
 	//besteling in database opslaan in tabel van bestelling_details 
 	public static void maakBestellingDetails(Connection con, Bestelling bestelling, Integer bestellingId) throws SQLException {
-		String sql = "INSERT INTO bestelling_details(bestelling_id, kaas_id, hoeveelheid_in_kg, prijs) VLUES(?,?,?,?)";
+		String sql = "INSERT INTO bestelling_details(bestelling_id, kaas_id, hoeveelheid_in_kg, totaal_prijs) VALUES(?,?,?,?)";
 		PreparedStatement ps = con.prepareStatement(sql);
 		HashMap<Kaas, BigDecimal> kazenList = bestelling.getBesteldeKazenList();
 		for(Map.Entry<Kaas, BigDecimal> entry: kazenList.entrySet()) {
@@ -27,9 +27,9 @@ public class BestellingDetailsIO {
 			ps.setBigDecimal(3, hoeveelheidInKg);
 			ps.setBigDecimal(4, totaalPrijs);
 			ps.executeUpdate();
-			BigDecimal huidigeVooraad = KaasIO.getVooraadVanKaas(kaas.getKaasId(), con);
+			BigDecimal huidigeVooraad = kaas.getVooraadInKg();
 			BigDecimal nieuweVooraad = huidigeVooraad.subtract(hoeveelheidInKg);
-			KaasIO.vooraadAanpassen(kaas.getKaasId(), nieuweVooraad, con);
+			KaasIO.vooraadAanpassen(kaas, nieuweVooraad, con);
 		}
 	}
 	

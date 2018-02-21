@@ -9,7 +9,7 @@ public class AdresIO {
 	
 	public static void maakNieuweAdres(Adres adres) throws SQLException {
 		Connection con = Connector.getInstance().getConnection();
-		String sql = "INSERT INTO bezorgadres(klantid, straatnaam, huisnummer, toevoegingsnummer, postcode, woonplaats) "
+		String sql = "INSERT INTO adres(klant_id, straatnaam, huisnummer, toevoegingsnummer, postcode, woonplaats) "
 						+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 		PreparedStatement ps = con.prepareStatement(sql);
 		ps.setInt(1, adres.getKlant().getKlantId());
@@ -26,7 +26,7 @@ public class AdresIO {
 	public static Adres getAdres(Klant klant) throws SQLException {
 		Adres adres = null;
 		Connection con = Connector.getInstance().getConnection();
-		String sql = "SELECT * FROM bezorgadres WHERE klantid = ?";
+		String sql = "SELECT * FROM adres WHERE klant_id = ?";
 		PreparedStatement ps = con.prepareStatement(sql);
 		ps.setInt(1, klant.getKlantId());
 		ResultSet rs = ps.executeQuery();

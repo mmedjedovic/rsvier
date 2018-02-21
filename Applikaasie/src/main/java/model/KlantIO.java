@@ -27,12 +27,13 @@ public class KlantIO {
 	}
 	
 	//een speciefiek klant uit databse te halen
-	public static ArrayList<Klant> getKlant(Integer klantId) throws SQLException {
-		Connection con = Connector.getInstance().getConnection();
+	public static Klant getKlant(Integer klantId) throws SQLException {
 		String sql = "SELECT * FROM klant WHERE klant_id = ?";
-		Statement st = con.createStatement();
-		ResultSet rs = st.executeQuery(sql);
-		return maakKlantenList(rs);
+		Connection con = Connector.getInstance().getConnection();
+		PreparedStatement ps = con.prepareStatement(sql);
+		ps.setInt(1, klantId);
+		ResultSet rs = ps.executeQuery();
+		return maakKlantenList(rs).get(0);
 	}
 	
 	//alle klanten uit database te halen
@@ -41,8 +42,6 @@ public class KlantIO {
 		String sql = "SELECT * FROM klant";
 		Statement st = con.createStatement();
 		ResultSet rs = st.executeQuery(sql);
-		con.close();
-		st.close();
 		return maakKlantenList(rs);
 	}
 	
