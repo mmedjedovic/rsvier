@@ -1,4 +1,4 @@
-package interfacesIO;
+package interfaces.io;
 
 import java.util.ArrayList;
 

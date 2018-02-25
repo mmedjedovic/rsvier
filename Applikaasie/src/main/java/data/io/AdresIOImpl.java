@@ -1,11 +1,11 @@
-package dataio;
+package data.io;
 
 import java.sql.*;
 
+import interfaces.io.AdresIO;
 import model.Adres;
 import model.Klant;
 import util.ExceptionIO;
-import interfacesIO.AdresIO;
 
 public class AdresIOImpl implements AdresIO{
 	

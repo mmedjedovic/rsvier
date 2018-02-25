@@ -1,4 +1,4 @@
-package dataio;
+package data.io;
 
 import java.sql.*;
 
