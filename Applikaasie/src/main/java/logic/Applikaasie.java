@@ -8,11 +8,16 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
-import logic.Bestelling.Status;
-import logic.Klant.KlantBuilder;
-import model.BestellingIO;
-import model.KaasIO;
-import model.KlantIO;
+import dataio.AdresIOImpl;
+import dataio.BestellingTotaalIOImpl;
+import dataio.KaasIOImpl;
+import dataio.KlantIOImpl;
+import model.Bestelling;
+import model.Bestelling.Status;
+import model.Klant;
+import model.Klant.KlantBuilder;
+import util.ExceptionIOImpl;
+import model.Adres;
 
 public class Applikaasie {
 	
@@ -20,18 +25,38 @@ public class Applikaasie {
 	public static void main(String[] args) {
 		SimpleDateFormat sf = new SimpleDateFormat("dd-MM-yyyy");
 		Date date;
+		Klant klant = null;
 		
 		/**
 		try {
 			//klant maken
-			date = sf.parse("03-1-1965");
+			date = sf.parse("08-8-1975");
 			System.out.println(sf.format(date));
-			Klant klant = new Klant.KlantBuilder("Mirko", "Varesak").geboorteDatum(date).build();	
+			klant = new Klant.KlantBuilder("Slavo", "Slavic").geboorteDatum(date).idKlant(6).build();	
 			//testen maakNieuweKlant methode
 			KlantIO.maakNieuweKlant(klant);
-		} catch (SQLException e) {
+		} catch (ExceptionIO e) {
 			e.printStackTrace();
 		} catch (ParseException e) {
+			e.printStackTrace();
+		}*/
+		
+		/**
+		try {
+			//adres maken
+			Adres adres = new Adres.AdresBuilder(klant).straatNaam("straatNaam").huisnummer("huisnumer").
+					toevoegingHuisnummer("toevoegingHuisnummer").postcode("postcode").woonplaats("woonplaats").build();
+			AdresIO.maakNieuweAdres(adres);
+		} catch (ExceptionIO e) {
+			System.out.println(e.getMessage());
+		}*/
+		
+		/**
+		//adres uit datbase te halen
+		try {
+			Adres adres = AdresIO.getAdres(klant);
+			System.out.println(adres.getKlant().getVoornaam() + "  " + adres.getHuisnummer());
+		} catch (ExceptionIO e) {
 			e.printStackTrace();
 		}*/
 		
@@ -41,7 +66,7 @@ public class Applikaasie {
 			Klant klant = KlantIO.getKlant(2);
 			date = klant.getGeboorteDatum();
 			System.out.println(klant.getVoornaam() + " " + klant.getAchternaam() + " " + sf.format(date));
-		} catch (SQLException e) {
+		} catch (ExceptionIO e) {
 			e.printStackTrace();
 		}*/
 		
@@ -54,7 +79,7 @@ public class Applikaasie {
 				date = klant.getGeboorteDatum();
 				System.out.println(klant.getVoornaam() + " " + klant.getAchternaam() + " " + sf.format(date));
 			}
-		} catch (SQLException e) {
+		} catch (ExceptionIO e) {
 			e.printStackTrace();
 		}*/
 		
@@ -66,7 +91,7 @@ public class Applikaasie {
 			//testen nieuweKaasMaken methode
 			KaasIO.nieuweKaasMaken(kaas1);
 			KaasIO.nieuweKaasMaken(kaas2);
-		} catch (SQLException e) {
+		} catch (ExceptionIO e) {
 			e.printStackTrace();
 		}*/
 		
@@ -75,7 +100,7 @@ public class Applikaasie {
 		try {
 			Kaas kaas = KaasIO.getKaas(2);
 			System.out.println(kaas.getNaam() + " " + kaas.getPrijsInKg() + " " + kaas.getVooraadInKg());
-		} catch (SQLException e) {
+		} catch (ExceptionIO e) {
 			e.printStackTrace();
 		}*/
 		
@@ -86,7 +111,7 @@ public class Applikaasie {
 			for(Kaas kaas: kazenLijst) {
 				System.out.println(kaas.getNaam() + " " + kaas.getPrijsInKg() + " " + kaas.getVooraadInKg());
 			}
-		} catch (SQLException e) {
+		} catch (ExceptionIO e) {
 			e.printStackTrace();
 		}*/
 		
@@ -108,11 +133,12 @@ public class Applikaasie {
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (SQLException e) {
+		} catch (ExceptionIO e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}*/
 		
+		/**
 		//testen of lijst van gevraagde bestellingen wordt gemaakt
 		ArrayList<Bestelling> bestellingLijst;
 		try {
@@ -120,9 +146,9 @@ public class Applikaasie {
 			for(Bestelling b: bestellingLijst) {
 				System.out.println(b.getBestellingId() + " " + b.getStatus().name());
 			}
-		} catch (SQLException e) {
+		} catch (ExceptionIO e) {
 			e.printStackTrace();
-		}
+		}*/
 		
 		
 		
