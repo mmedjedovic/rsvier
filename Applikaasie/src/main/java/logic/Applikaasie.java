@@ -16,7 +16,7 @@ import model.Bestelling;
 import model.Bestelling.Status;
 import model.Klant;
 import model.Klant.KlantBuilder;
-import util.ExceptionIOImpl;
+import util.ExceptionIO;
 import model.Adres;
 
 public class Applikaasie {

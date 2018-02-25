@@ -13,7 +13,7 @@ import java.util.Map;
 import interfacesIO.BestellingDetailsIO;
 import model.Bestelling;
 import model.Kaas;
-import util.ExceptionIOImpl;
+import util.ExceptionIO;
 
 public class BestellingDetailsIOImpl implements BestellingDetailsIO{
 	
@@ -30,7 +30,7 @@ public class BestellingDetailsIOImpl implements BestellingDetailsIO{
 	
 	//besteling in database opslaan in tabel van bestelling_details 
 	@Override
-	public void maakBestellingDetails(Bestelling bestelling) throws ExceptionIOImpl {
+	public void maakBestellingDetails(Bestelling bestelling) throws ExceptionIO {
 		String sql = "INSERT INTO bestelling_details(bestelling_id, kaas_id, hoeveelheid_in_kg, totaal_prijs) VALUES(?,?,?,?)";
 		try(Connection con = Connector.getInstance().getConnection(); PreparedStatement ps = con.prepareStatement(sql);) {
 			HashMap<Kaas, BigDecimal> kazenList = bestelling.getBesteldeKazenList();
@@ -53,7 +53,7 @@ public class BestellingDetailsIOImpl implements BestellingDetailsIO{
 		}
 		catch(SQLException e) {
 			e.printStackTrace();
-			throw new ExceptionIOImpl("Niet gelukt om bestellingsdetails aan te maken in database");
+			throw new ExceptionIO("Niet gelukt om bestellingsdetails aan te maken in database");
 		}
 	}
 	

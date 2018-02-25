@@ -9,7 +9,7 @@ import interfacesIO.BestellingDetailsIO;
 import interfacesIO.BestellingTotaalIO;
 import model.Bestelling;
 import model.Klant;
-import util.ExceptionIOImpl;
+import util.ExceptionIO;
 import model.Bestelling.Status;
 
 public class BestellingTotaalIOImpl implements BestellingTotaalIO{
@@ -27,7 +27,7 @@ public class BestellingTotaalIOImpl implements BestellingTotaalIO{
 	
 	//bestelling_totaal tabel wordt gemaakt
 	@Override
-	public void maakBestellingTotaal(Bestelling bestelling) throws ExceptionIOImpl{
+	public void maakBestellingTotaal(Bestelling bestelling) throws ExceptionIO{
 		String sql = "INSERT INTO bestelling_totaal(klant_id, totaal_prijs, bestelling_datum, status) VALUES(?, ?, ?, ?)";
 		try(Connection con = Connector.getInstance().getConnection(); PreparedStatement ps = con.prepareStatement(sql);) {
 			Date bestellingDatum = new Date(bestelling.getBestellingDate().getTime());
@@ -40,13 +40,13 @@ public class BestellingTotaalIOImpl implements BestellingTotaalIO{
 		}
 		catch(SQLException e) {
 			e.printStackTrace();
-			throw new ExceptionIOImpl("Niet gelukt nieuwe bestelling_totaal aan te maken");
+			throw new ExceptionIO("Niet gelukt nieuwe bestelling_totaal aan te maken");
 		}
 	}
 
 	//methode om overzicht van bestellingen te maken van specifiek klant, open of gesloten
 	@Override
-	public ArrayList<Bestelling> getBestellingenPerKlant(Integer klantId, Status status) throws ExceptionIOImpl {
+	public ArrayList<Bestelling> getBestellingenPerKlant(Integer klantId, Status status) throws ExceptionIO {
 		String sql = "SELECT * FROM bestelling_totaal WHERE  klant_id = ? AND status = ?";
 		try(Connection con = Connector.getInstance().getConnection(); PreparedStatement ps = con.prepareStatement(sql);) {
 			ps.setInt(1, klantId);
@@ -59,13 +59,13 @@ public class BestellingTotaalIOImpl implements BestellingTotaalIO{
 		}
 		catch(SQLException e) {
 			e.printStackTrace();
-			throw new ExceptionIOImpl("Niet gelukt overzicht van bestellingan van gegeven klant aan te maken");
+			throw new ExceptionIO("Niet gelukt overzicht van bestellingan van gegeven klant aan te maken");
 		}
 	}
 	
 	//wijzigen status van bestellingen
 	@Override
-	public void changeStatusBestelling(Bestelling bestelling, Status status) throws ExceptionIOImpl {
+	public void changeStatusBestelling(Bestelling bestelling, Status status) throws ExceptionIO {
 		String sql = "UPDATE bestelling_totaal SET status = ? WHERE bestelling_id = ?";
 		try(Connection con = Connector.getInstance().getConnection(); PreparedStatement ps = con.prepareStatement(sql);) {
 			ps.setString(1, Status.GESLOTEN.name());
@@ -74,7 +74,7 @@ public class BestellingTotaalIOImpl implements BestellingTotaalIO{
 		}
 		catch(SQLException e) {
 			e.printStackTrace();
-			throw new ExceptionIOImpl("Niet gelukt om status van bestelling te wijzigen");
+			throw new ExceptionIO("Niet gelukt om status van bestelling te wijzigen");
 		}
 	}
 	

@@ -9,7 +9,7 @@ import java.util.*;
 
 import interfacesIO.KlantIO;
 import model.Klant;
-import util.ExceptionIOImpl;
+import util.ExceptionIO;
 
 import java.sql.Date;
 
@@ -29,7 +29,7 @@ public class KlantIOImpl implements KlantIO{
 	
 	//een nieuwe klant in databse maken
 	@Override
-	public void maakNieuweKlant(Klant klant) throws ExceptionIOImpl {
+	public void maakNieuweKlant(Klant klant) throws ExceptionIO {
 		String sql = "INSERT INTO klant (voornaam, achternaam, geboortedatum) VALUES (?, ?, ?)";
 		try(Connection con = Connector.getInstance().getConnection(); PreparedStatement ps = con.prepareStatement(sql);) {
 			Date date = new Date(klant.getGeboorteDatum().getTime());
@@ -40,13 +40,13 @@ public class KlantIOImpl implements KlantIO{
 		}
 		catch(SQLException e) {
 			e.printStackTrace();
-			throw new ExceptionIOImpl("Niet gelukt nieuwe klant in database te maken");
+			throw new ExceptionIO("Niet gelukt nieuwe klant in database te maken");
 		}
 	}
 	
 	//een speciefiek klant uit databse te halen
 	@Override
-	public Klant getKlant(Integer klantId) throws ExceptionIOImpl {
+	public Klant getKlant(Integer klantId) throws ExceptionIO {
 		String sql = "SELECT * FROM klant WHERE klant_id = ?";
 		try(Connection con = Connector.getInstance().getConnection(); PreparedStatement ps = con.prepareStatement(sql);) {
 			ps.setInt(1, klantId);
@@ -56,13 +56,13 @@ public class KlantIOImpl implements KlantIO{
 		}
 		catch(SQLException e) {
 			e.printStackTrace();
-			throw new ExceptionIOImpl("Niet gelukt gevraagde klant uit database te halen");
+			throw new ExceptionIO("Niet gelukt gevraagde klant uit database te halen");
 		}
 	}
 	
 	//alle klanten uit database te halen
 	@Override
-	public ArrayList<Klant> getKlanten() throws ExceptionIOImpl {
+	public ArrayList<Klant> getKlanten() throws ExceptionIO {
 		String sql = "SELECT * FROM klant";
 		try(Connection con = Connector.getInstance().getConnection(); 
 										Statement st = con.createStatement();
@@ -71,7 +71,7 @@ public class KlantIOImpl implements KlantIO{
 		}
 		catch(SQLException e) {
 			e.printStackTrace();
-			throw new ExceptionIOImpl("Niet gelukt om lijst van klanten uit databse te halen");
+			throw new ExceptionIO("Niet gelukt om lijst van klanten uit databse te halen");
 		}
 	}
 	

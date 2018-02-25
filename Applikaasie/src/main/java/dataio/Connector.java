@@ -2,7 +2,7 @@ package dataio;
 
 import java.sql.*;
 
-import util.ExceptionIOImpl;
+import util.ExceptionIO;
 
 public class Connector {
 	
@@ -17,12 +17,12 @@ public class Connector {
 		return connector;
 	}
 	
-	public Connection getConnection() throws ExceptionIOImpl {
+	public Connection getConnection() throws ExceptionIO {
 		try {
 			return DriverManager.getConnection("jdbc:mysql://localhost:3306/applikaasie", "root", "root");
 		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new ExceptionIOImpl("Connectie met database is niet gelukt!");
+			throw new ExceptionIO("Connectie met database is niet gelukt!");
 		}
 	}
 

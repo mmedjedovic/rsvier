@@ -4,7 +4,7 @@ import java.sql.*;
 
 import model.Adres;
 import model.Klant;
-import util.ExceptionIOImpl;
+import util.ExceptionIO;
 import interfacesIO.AdresIO;
 
 public class AdresIOImpl implements AdresIO{
@@ -22,7 +22,7 @@ public class AdresIOImpl implements AdresIO{
 	
 	//een adres maken
 	@Override
-	public void maakNieuweAdres(Adres adres) throws ExceptionIOImpl {
+	public void maakNieuweAdres(Adres adres) throws ExceptionIO {
 		
 		String sql = "INSERT INTO adres(klant_id, straatnaam, huisnummer, toevoegingsnummer, postcode, woonplaats) "
 						+ "VALUES (?, ?, ?, ?, ?, ?)";
@@ -38,13 +38,13 @@ public class AdresIOImpl implements AdresIO{
 		}
 		catch(SQLException e) {
 			e.printStackTrace();
-			throw new ExceptionIOImpl("Niet gelukt nieuwe adres in database aanmaken");
+			throw new ExceptionIO("Niet gelukt nieuwe adres in database aanmaken");
 		}
 	}
 	
 	//adres uit database halen
 	@Override
-	public Adres getAdres(Klant klant) throws ExceptionIOImpl {
+	public Adres getAdres(Klant klant) throws ExceptionIO {
 		String sql = "SELECT * FROM adres WHERE klant_id = ?";
 		try(Connection con = Connector.getInstance().getConnection();
 				PreparedStatement ps = con.prepareStatement(sql);) {
@@ -55,7 +55,7 @@ public class AdresIOImpl implements AdresIO{
 		}
 		catch(SQLException e) {
 			e.printStackTrace();
-			throw new ExceptionIOImpl("Niet gelukt adres uit database halen");
+			throw new ExceptionIO("Niet gelukt adres uit database halen");
 		}
 	}
 	

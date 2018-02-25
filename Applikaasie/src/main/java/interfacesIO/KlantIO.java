@@ -3,14 +3,14 @@ package interfacesIO;
 import java.util.ArrayList;
 
 import model.Klant;
-import util.ExceptionIOImpl;
+import util.ExceptionIO;
 
 public interface KlantIO {
 	
-	public void maakNieuweKlant(Klant klant) throws ExceptionIOImpl;
+	public void maakNieuweKlant(Klant klant) throws ExceptionIO;
 	
-	public Klant getKlant(Integer klantId) throws ExceptionIOImpl;
+	public Klant getKlant(Integer klantId) throws ExceptionIO;
 	
-	public ArrayList<Klant> getKlanten() throws ExceptionIOImpl;
+	public ArrayList<Klant> getKlanten() throws ExceptionIO;
 
 }

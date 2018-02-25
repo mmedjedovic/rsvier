@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 import interfacesIO.KaasIO;
 import model.Kaas;
-import util.ExceptionIOImpl;
+import util.ExceptionIO;
 
 public class KaasIOImpl implements KaasIO{
 	
@@ -23,7 +23,7 @@ public class KaasIOImpl implements KaasIO{
 	
 	//nieuwe kaas in database opslaan
 	@Override
-	public void nieuweKaasMaken(Kaas kaas) throws ExceptionIOImpl {
+	public void nieuweKaasMaken(Kaas kaas) throws ExceptionIO {
 		String sql = "INSERT INTO kaas (kaas_naam, prijs_in_kg, vooraad_in_kg) VALUES (?, ?, ?)";
 		try(Connection con = Connector.getInstance().getConnection(); PreparedStatement ps = con.prepareStatement(sql);) {
 			ps.setString(1, kaas.getNaam());
@@ -33,13 +33,13 @@ public class KaasIOImpl implements KaasIO{
 		}
 		catch(SQLException e) {
 			e.printStackTrace();
-			throw new ExceptionIOImpl("Niet gelukt om nieuwe kaas in database aan te maken");
+			throw new ExceptionIO("Niet gelukt om nieuwe kaas in database aan te maken");
 		}
 	}
 	
 	//een speciefiek kaas uit database halen
 	@Override
-	public Kaas getKaas(Integer kaasId) throws ExceptionIOImpl {
+	public Kaas getKaas(Integer kaasId) throws ExceptionIO {
 		String sql = "SELECT * FROM kaas WHERE kaas_id = ?";
 		try(Connection con = Connector.getInstance().getConnection(); PreparedStatement ps = con.prepareStatement(sql);) {
 			ps.setInt(1, kaasId);
@@ -49,13 +49,13 @@ public class KaasIOImpl implements KaasIO{
 		}
 		catch(SQLException e) {
 			e.printStackTrace();
-			throw new ExceptionIOImpl("Niet gelukt om kaas uit database te halen");
+			throw new ExceptionIO("Niet gelukt om kaas uit database te halen");
 		}
 	}
 	
 	//lijst van alle kazen maken
 	@Override
-	public ArrayList<Kaas> getKazenLijst() throws ExceptionIOImpl {
+	public ArrayList<Kaas> getKazenLijst() throws ExceptionIO {
 		String sql = "SELECT * FROM kaas";
 		try(Connection con = Connector.getInstance().getConnection(); 
 										Statement st = con.createStatement();
@@ -64,14 +64,14 @@ public class KaasIOImpl implements KaasIO{
 		}
 		catch(SQLException e) {
 			e.printStackTrace();
-			throw new ExceptionIOImpl("Niet gelukt m list van kazen te halen uit database");
+			throw new ExceptionIO("Niet gelukt m list van kazen te halen uit database");
 		}
 	}
 	
 	
 	//vooraad aantaal aanpassen
 	@Override
-	public void vooraadAanpassen(Kaas kaas, BigDecimal nieuweVooraad, Connection con) throws ExceptionIOImpl {
+	public void vooraadAanpassen(Kaas kaas, BigDecimal nieuweVooraad, Connection con) throws ExceptionIO {
 		String sql = "UPDATE kaas SET vooraad_in_kg = ? WHERE kaas_id = ?";
 		try(PreparedStatement ps = con.prepareStatement(sql);) {
 			ps.setBigDecimal(1, nieuweVooraad);
@@ -80,7 +80,7 @@ public class KaasIOImpl implements KaasIO{
 		}
 		catch(SQLException e) {
 			e.printStackTrace();
-			throw new ExceptionIOImpl("Niet gelukt om vooraad van Kaas aan te passen");
+			throw new ExceptionIO("Niet gelukt om vooraad van Kaas aan te passen");
 		}
 	}
 	
