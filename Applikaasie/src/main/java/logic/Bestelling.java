@@ -1,39 +1,66 @@
 package logic;
 
 
+import java.math.BigDecimal;
+import java.util.Date;
 import java.util.HashMap;
 
 public class Bestelling {
 	
-	private final HashMap<String, Double> besteldeKazenList;
-	private final double totaalPrijs;
-	private final int klantId;
+	private final HashMap<Kaas, BigDecimal> besteldeKazenList;
+	private final BigDecimal totaalPrijs;
+	private final Klant klant;
+	private final Date bestellingDate;
+	private final Status status;
+	private final Integer bestellingId;
 	
+	public enum Status {OPEN, GESLOTEN}
 	
 	private Bestelling(BestellingBuilder bestellingBuilder) {
 		this.besteldeKazenList = bestellingBuilder.besteldeKazenList;
 		this.totaalPrijs = bestellingBuilder.totaalPrijs;
-		this.klantId = bestellingBuilder.klantId;
-		
+		this.klant = bestellingBuilder.klant;
+		this.bestellingDate = bestellingBuilder.bestellingDate;
+		this.status = bestellingBuilder.status;
+		this.bestellingId = bestellingBuilder.bestellingId;
 	}
 	
 	public static class BestellingBuilder {
 		
-		private HashMap<String, Double> besteldeKazenList;
-		private double totaalPrijs;
-		private final int klantId;
+		private final Klant klant;
+		private HashMap<Kaas, BigDecimal> besteldeKazenList;
+		private BigDecimal totaalPrijs;
+		private Date bestellingDate;
+		private Status status;
+		private Integer bestellingId = -1;
 		
-		public BestellingBuilder(int klantId) {
-			this.klantId = klantId;
+		
+		public BestellingBuilder(Klant klant) {
+			this.klant = klant;
 		}
 		
-		public BestellingBuilder besteldeKazenList(HashMap<String, Double> besteldeKazenList) {
+		public BestellingBuilder besteldeKazenList(HashMap<Kaas, BigDecimal> besteldeKazenList) {
 			this.besteldeKazenList = besteldeKazenList;
 			return this;
 		}
 		
-		public BestellingBuilder totaalPrijs(double totaalPrijs) {
+		public BestellingBuilder totaalPrijs(BigDecimal totaalPrijs) {
 			this.totaalPrijs = totaalPrijs;
+			return this;
+		}
+		
+		public BestellingBuilder bestellingDate(Date bestellingDate) {
+			this.bestellingDate = bestellingDate;
+			return this;
+		}
+		
+		public BestellingBuilder status(Status status) {
+			this.status = status;
+			return this;
+		}
+		
+		public BestellingBuilder bestellingId(Integer bestellingId) {
+			this.bestellingId = bestellingId;
 			return this;
 		}
 		
@@ -43,16 +70,29 @@ public class Bestelling {
 		
 	}
 
-	public HashMap<String, Double> getBesteldeKazenList() {
+	public HashMap<Kaas, BigDecimal> getBesteldeKazenList() {
 		return besteldeKazenList;
 	}
 
-	public double getTotaalPrijs() {
+	public BigDecimal getTotaalPrijs() {
 		return totaalPrijs;
 	}
 
-	public int getKlantId() {
-		return klantId;
+	public Klant getKlant() {
+		return klant;
+	}
+
+	public Date getBestellingDate() {
+		return bestellingDate;
+	}
+
+	public Status getStatus() {
+		return status;
+	}
+
+	public Integer getBestellingId() {
+		return bestellingId;
 	}
 	
+
 }
