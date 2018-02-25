@@ -1,8 +1,8 @@
-package data.io;
+package io.data;
 
 import java.sql.*;
 
-import interfaces.io.AdresIO;
+import io.interfaces.AdresIO;
 import model.Adres;
 import model.Klant;
 import util.ExceptionIO;

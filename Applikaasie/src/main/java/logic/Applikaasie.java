@@ -8,10 +8,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
-import data.io.AdresIOImpl;
-import data.io.BestellingTotaalIOImpl;
-import data.io.KaasIOImpl;
-import data.io.KlantIOImpl;
+import io.data.AdresIOImpl;
+import io.data.BestellingTotaalIOImpl;
+import io.data.KaasIOImpl;
+import io.data.KlantIOImpl;
 import model.Bestelling;
 import model.Bestelling.Status;
 import model.Klant;

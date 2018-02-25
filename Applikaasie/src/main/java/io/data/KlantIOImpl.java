@@ -1,4 +1,4 @@
-package data.io;
+package io.data;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.*;
 
-import interfaces.io.KlantIO;
+import io.interfaces.KlantIO;
 import model.Klant;
 import util.ExceptionIO;
 

@@ -1,12 +1,12 @@
-package data.io;
+package io.data;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import interfaces.io.BestellingDetailsIO;
-import interfaces.io.BestellingTotaalIO;
+import io.interfaces.BestellingDetailsIO;
+import io.interfaces.BestellingTotaalIO;
 import model.Bestelling;
 import model.Klant;
 import util.ExceptionIO;

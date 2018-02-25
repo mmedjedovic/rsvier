@@ -1,10 +1,10 @@
-package data.io;
+package io.data;
 
 import java.math.BigDecimal;
 import java.sql.*;
 import java.util.ArrayList;
 
-import interfaces.io.KaasIO;
+import io.interfaces.KaasIO;
 import model.Kaas;
 import util.ExceptionIO;
 

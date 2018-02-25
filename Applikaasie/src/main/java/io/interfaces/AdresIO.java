@@ -1,4 +1,4 @@
-package interfaces.io;
+package io.interfaces;
 
 import model.Adres;
 import model.Klant;

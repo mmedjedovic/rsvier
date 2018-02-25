@@ -1,4 +1,4 @@
-package data.io;
+package io.data;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -10,7 +10,7 @@ import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Map;
 
-import interfaces.io.BestellingDetailsIO;
+import io.interfaces.BestellingDetailsIO;
 import model.Bestelling;
 import model.Kaas;
 import util.ExceptionIO;
