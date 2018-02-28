@@ -54,16 +54,11 @@ public class Home extends Application{
 		vBoxBestelling.getChildren().addAll(bestellingLabel, bestellingFlowPane);
 		
 		
-		
 		VBox vBox = new VBox();
 		vBox.setPadding(new Insets(10, 10, 10, 10));
 		vBox.getChildren().addAll(vBoxKlant, vBoxBestelling, vBoxArtikel);
 		
 		BorderPane borderPane = new BorderPane();
-		//borderPane.setTop(new HBox());
-		//borderPane.setLeft(vBoxKlant);
-		//borderPane.setCenter(vBoxArtikel);
-		//borderPane.setRight(vBoxBestelling);
 		borderPane.setLeft(vBox);
 		
 		Scene scene = new Scene(borderPane);
