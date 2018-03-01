@@ -13,34 +13,17 @@ public class Home extends Application{
 	
 	public void start(Stage stage) {
 		
+		stage.setTitle("Applikassie");
+		
+		//Opzetten knoppen voor klant, bestelling en artikel
 		Label klantLabel = new Label("Klant");
-		Button buttonNewKlant = new Button("nieuw klant");
-		Button buttonOverzichtKlant = new Button("overzicht");
-		FlowPane klantFlowPane = new FlowPane();
-		klantFlowPane.setPadding(new Insets(10, 10, 20, 10));
-		klantFlowPane.setVgap(5);
-		klantFlowPane.setHgap(5);
-		klantFlowPane.getChildren().addAll(buttonNewKlant, buttonOverzichtKlant);
-		
+		FlowPane klantFlowPane = getKlantFlowPane(stage);
 		Label artikelLabel = new Label("Artikel");
-		Button buttonNewArtikel = new Button("nieuw artikel");
-		Button buttonOverzichtArtikel = new Button("overzicht");
-		FlowPane artikelFlowPane = new FlowPane();
-		artikelFlowPane.setPadding(new Insets(10, 10, 20, 10));
-		artikelFlowPane.setVgap(5);
-		artikelFlowPane.setHgap(5);
-		artikelFlowPane.getChildren().addAll(buttonNewArtikel, buttonOverzichtArtikel);
-		
+		FlowPane artikelFlowPane = getArtikelFlowPane();
 		Label bestellingLabel = new Label("Bestelling");
-		Button buttonNewBestelling = new Button("nieuw bestelling");
-		Button buttonOverzichtBestelling = new Button("bestelling");
-		FlowPane bestellingFlowPane = new FlowPane();
-		bestellingFlowPane.setPadding(new Insets(10, 10, 20, 10));
-		bestellingFlowPane.setVgap(5);
-		bestellingFlowPane.setHgap(5);
-		bestellingFlowPane.getChildren().addAll(buttonNewBestelling, buttonOverzichtBestelling);
+		FlowPane bestellingFlowPane = getBestellingFlowPane();
 		
-		
+		//verikal boxen voor elke kategorie appart
 		VBox vBoxKlant = new VBox();
 		vBoxKlant.setPadding(new Insets(10, 10, 10, 10));
 		vBoxKlant.getChildren().addAll(klantLabel, klantFlowPane);
@@ -66,6 +49,89 @@ public class Home extends Application{
 		stage.setScene(scene);
 		
 		stage.show();
+	}
+	
+	private FlowPane getKlantFlowPane(Stage stage) {
+		Button buttonNewKlant = getButtonNewKlant(stage);
+		Button buttonOverzichtKlant = getButtonOverzichtKlant();
+		FlowPane klantFlowPane = new FlowPane();
+		klantFlowPane.setPadding(new Insets(10, 10, 20, 10));
+		klantFlowPane.setVgap(5);
+		klantFlowPane.setHgap(5);
+		klantFlowPane.getChildren().addAll(buttonNewKlant, buttonOverzichtKlant);
+		return klantFlowPane;
+	}
+	
+	private Button getButtonNewKlant(Stage stage) {
+		Button buttonNewKlant = new Button("nieuwe maken");
+		buttonNewKlant.setOnAction(e -> {
+			System.out.println("nieuwklant gedrukt");
+			KlantMaken klantMaken = new KlantMaken();
+			klantMaken.start(stage);
+		});
+		return buttonNewKlant;
+	}
+	
+	private Button getButtonOverzichtKlant() {
+		Button buttonOverzichtKlant = new Button("overzicht maken");
+		buttonOverzichtKlant.setOnAction(e -> {
+			System.out.println("overzichtklant gedrukt");
+		});
+		return buttonOverzichtKlant;
+	}
+	
+	private FlowPane getArtikelFlowPane() {
+		Button buttonNewArtikel = getButtonNewArtikel();
+		Button buttonOverzichtArtikel = getButtonOverzichtArtikel();
+		FlowPane artikelFlowPane = new FlowPane();
+		artikelFlowPane.setPadding(new Insets(10, 10, 20, 10));
+		artikelFlowPane.setVgap(5);
+		artikelFlowPane.setHgap(5);
+		artikelFlowPane.getChildren().addAll(buttonNewArtikel, buttonOverzichtArtikel);
+		return artikelFlowPane;
+	}
+	
+	private Button getButtonNewArtikel() {
+		Button buttonNewArtikel = new Button("nieuw maken");
+		buttonNewArtikel.setOnAction(e -> {
+			System.out.println("newartikel gedrukt");
+		});
+		return buttonNewArtikel;
+	}
+	
+	private Button getButtonOverzichtArtikel() {
+		Button buttonOverzichtArtikel = new Button("overzicht maken");
+		buttonOverzichtArtikel.setOnAction(e -> {
+			System.out.println("overzichartikel gedrukt");
+		});
+		return buttonOverzichtArtikel;
+	}
+	
+	private FlowPane getBestellingFlowPane() {
+		Button buttonNewBestelling = getButtonNewBestelling();
+		Button buttonOverzichtBestelling = getButtonOverzichtBesteling();
+		FlowPane bestellingFlowPane = new FlowPane();
+		bestellingFlowPane.setPadding(new Insets(10, 10, 20, 10));
+		bestellingFlowPane.setVgap(5);
+		bestellingFlowPane.setHgap(5);
+		bestellingFlowPane.getChildren().addAll(buttonNewBestelling, buttonOverzichtBestelling);
+		return bestellingFlowPane;
+	}
+	
+	private Button getButtonNewBestelling() {
+		Button buttonNewBestelling = new Button("nieuwe maken");
+		buttonNewBestelling.setOnAction(e -> {
+			System.out.println("newbestelling gedrukt");
+		});
+		return buttonNewBestelling;
+	}
+	
+	private Button getButtonOverzichtBesteling() {
+		Button buttonOverzichtBestelling = new Button("overzicht maken");
+		buttonOverzichtBestelling.setOnAction(e -> {
+			System.out.println("overzichtbestelling gedrukt");
+		});
+		return buttonOverzichtBestelling;
 	}
 	
 	public static void main(String[] args) {
