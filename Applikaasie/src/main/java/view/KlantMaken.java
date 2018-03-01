@@ -1,6 +1,13 @@
 package view;
 
 import javafx.stage.*;
+import logic.Applikaasie;
+import util.ExceptionIO;
+
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
+
 import javafx.application.*;
 import javafx.scene.control.*;
 import javafx.geometry.*;
@@ -9,22 +16,20 @@ import javafx.scene.*;
 import javafx.scene.text.*;
 
 @SuppressWarnings("restriction")
-public class KlantMaken extends Application{
+public class KlantMaken {
 	
-	public void start(Stage stage) {
-		
-		stage.setTitle("Formulier");
-		GridPane pane = makeGridPane(stage);
-		Scene scene = new Scene(pane);
-		stage.setScene(scene);
-		stage.show();
-		
+	
+	public Scene getKlantMakenScene(Scene homeScene, Stage stage, Applikaasie applikaasie) {
+		GridPane pane = makeGridPane(stage, homeScene, applikaasie);
+		Scene klantMakenscene = new Scene(pane);
+		return klantMakenscene;
 	}
 	
-	private GridPane makeGridPane(Stage stage) {
+	
+	private GridPane makeGridPane(Stage stage, Scene homeScene, Applikaasie applikaasie) {
 		
 		//crieeren velden for grid pane
-		Button homeButton = getHomeButton(stage);
+		Button homeButton = getHomeButton(stage, homeScene);
 		Label titel = new Label("Invullen formulier");
 		Label voornaamLabel = new Label("voornaam:");
 		TextField voornaamTextfield = new TextField();
@@ -38,14 +43,29 @@ public class KlantMaken extends Application{
 		TextField straatNaamTextField = new TextField();
 		Label huisnummerLabel = new Label("huisnummer:");
 		TextField huisnummerTextField = new TextField();
-		Label toevoegingsnummerLabel = new Label("toevoegingsnummer:");
-		TextField toevoegingsnummerTextField = new TextField();
+		Label toevoegingHuisnummerLabel = new Label("toevoegingsnummer:");
+		TextField toevoegingHuisnummerTextField = new TextField();
 		Label postcodeLabel = new Label("postcode:");
 		TextField postcodeTextField = new TextField();
 		Label woonplaatsLabel = new Label("woonplaats:");
 		TextField woonplaatsTextField = new TextField();
 		Button registratieButton = new Button("registreer");
 		Text info = new Text("Velden met sterretjes zijn verplicht!");
+		
+		//event handler of registratie buton
+		registratieButton.setOnAction(e -> {
+			LocalDate localDate = geboorteDatumPicker.getValue();
+			Date date = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+			try {
+				applikaasie.maakNieuweKlantenAdres(voornaamTextfield.getText(), achternaamTextField.getText(), date, 
+												straatNaamTextField.getText(), huisnummerTextField.getText(), toevoegingHuisnummerTextField.getText(), 
+																								postcodeTextField.getText(), woonplaatsTextField.getText());
+			} catch (ExceptionIO e1) {
+				
+				e1.printStackTrace();
+			}
+			
+		});
 		
 		//opzetten grid pane
 		GridPane pane = new GridPane();
@@ -69,8 +89,8 @@ public class KlantMaken extends Application{
 		pane.add(straatNaamTextField, 1, 4);
 		pane.add(huisnummerLabel, 0, 5);
 		pane.add(huisnummerTextField, 1, 5);
-		pane.add(toevoegingsnummerLabel, 0, 6);
-		pane.add(toevoegingsnummerTextField, 1, 6);
+		pane.add(toevoegingHuisnummerLabel, 0, 6);
+		pane.add(toevoegingHuisnummerTextField, 1, 6);
 		pane.add(postcodeLabel, 0, 7);
 		pane.add(postcodeTextField, 1, 7);
 		pane.add(woonplaatsLabel, 0, 8);
@@ -81,12 +101,10 @@ public class KlantMaken extends Application{
 		return pane;
 	}
 	
-	private Button getHomeButton(Stage stage) {
+	private Button getHomeButton(Stage stage, Scene homeScene) {
 		Button homeButton = new Button("Home");
 		homeButton.setOnAction(e -> {
-			Home home = new Home();
-			home.start(stage);
-			
+			stage.setScene(homeScene);
 		});
 		return homeButton;
 	}

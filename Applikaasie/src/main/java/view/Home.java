@@ -1,6 +1,7 @@
 package view;
 
 import javafx.stage.*;
+import logic.Applikaasie;
 import javafx.application.*;
 import javafx.scene.control.*;
 import javafx.geometry.*;
@@ -10,6 +11,8 @@ import javafx.scene.*;
 @SuppressWarnings("restriction")
 public class Home extends Application{
 	
+	Applikaasie applikassie = new Applikaasie();
+	Scene homeScene;
 	
 	public void start(Stage stage) {
 		
@@ -44,9 +47,9 @@ public class Home extends Application{
 		BorderPane borderPane = new BorderPane();
 		borderPane.setLeft(vBox);
 		
-		Scene scene = new Scene(borderPane);
+		homeScene = new Scene(borderPane);
 		
-		stage.setScene(scene);
+		stage.setScene(homeScene);
 		
 		stage.show();
 	}
@@ -67,7 +70,8 @@ public class Home extends Application{
 		buttonNewKlant.setOnAction(e -> {
 			System.out.println("nieuwklant gedrukt");
 			KlantMaken klantMaken = new KlantMaken();
-			klantMaken.start(stage);
+			Scene klantMakenScene = klantMaken.getKlantMakenScene(homeScene, stage, applikassie);
+			stage.setScene(klantMakenScene);
 		});
 		return buttonNewKlant;
 	}

@@ -28,7 +28,7 @@ public class AdresIOImpl implements AdresIO{
 						+ "VALUES (?, ?, ?, ?, ?, ?)";
 		try(Connection con = Connector.getInstance().getConnection();
 				PreparedStatement ps = con.prepareStatement(sql);) {
-			ps.setInt(1, adres.getKlant().getKlantId());
+			ps.setInt(1, adres.getKlantId());
 			ps.setString(2, adres.getStraatNaam());
 			ps.setString(3, adres.getHuisnummer());
 			ps.setString(4, adres.getToevoegingHuisnummer());
@@ -44,13 +44,13 @@ public class AdresIOImpl implements AdresIO{
 	
 	//adres uit database halen
 	@Override
-	public Adres getAdres(Klant klant) throws ExceptionIO {
+	public Adres getAdres(Integer klantId) throws ExceptionIO {
 		String sql = "SELECT * FROM adres WHERE klant_id = ?";
 		try(Connection con = Connector.getInstance().getConnection();
 				PreparedStatement ps = con.prepareStatement(sql);) {
-			ps.setInt(1, klant.getKlantId());
+			ps.setInt(1, klantId);
 			try(ResultSet rs = ps.executeQuery();) {
-				return helpGetAdres(rs, klant);
+				return helpGetAdres(rs, klantId);
 			}
 		}
 		catch(SQLException e) {
@@ -60,10 +60,10 @@ public class AdresIOImpl implements AdresIO{
 	}
 	
 	//hulp methode om adres uit database halen
-	private Adres helpGetAdres(ResultSet rs, Klant klant) throws SQLException {
+	private Adres helpGetAdres(ResultSet rs, Integer klantId) throws SQLException {
 		Adres adres = null;
 			if(rs.next()) {
-				adres = new Adres.AdresBuilder(klant).straatNaam(rs.getString("straatnaam")).huisnummer(rs.getString("huisnummer")).
+				adres = new Adres.AdresBuilder(klantId).straatNaam(rs.getString("straatnaam")).huisnummer(rs.getString("huisnummer")).
 						toevoegingHuisnummer(rs.getString("toevoegingsnummer")).postcode(rs.getString("postcode")).woonplaats(rs.getString("woonplaats")).build();
 		}
 		return adres;

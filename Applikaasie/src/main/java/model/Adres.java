@@ -2,7 +2,7 @@ package model;
 
 public class Adres {
 	
-	private final Klant klant;
+	private final Integer klantId;
 	private final String straatNaam;
 	private final String huisnummer;
 	private final String toevoegingHuisnummer;
@@ -16,20 +16,20 @@ public class Adres {
 		this.toevoegingHuisnummer = adresBuilder.toevoegingHuisnummer;
 		this.postcode = adresBuilder.postcode;
 		this.woonplaats = adresBuilder.woonplaats;
-		this.klant = adresBuilder.klant;
+		this.klantId = adresBuilder.klantId;
 	}
 	
 	public static class AdresBuilder {
 		
-		private final Klant klant;
+		private final Integer klantId;
 		private String straatNaam = "nvt";
 		private String huisnummer = "nvt";
 		private String toevoegingHuisnummer = "nvt";
 		private String postcode = "nvt";
 		private String woonplaats = "nvt";
 		
-		public AdresBuilder(Klant klant) {
-			this.klant = klant;
+		public AdresBuilder(Integer klantId) {
+			this.klantId = klantId;
 		}
 		
 		public AdresBuilder straatNaam(String straatNaam) {
@@ -64,8 +64,8 @@ public class Adres {
 	}
 	
 	
-	public Klant getKlant() {
-		return klant;
+	public Integer getKlantId() {
+		return klantId;
 	}
 	
 	public String getStraatNaam() {

@@ -29,14 +29,16 @@ public class KlantIOImpl implements KlantIO{
 	
 	//een nieuwe klant in databse maken
 	@Override
-	public void maakNieuweKlant(Klant klant) throws ExceptionIO {
+	public Integer maakNieuweKlant(Klant klant) throws ExceptionIO {
 		String sql = "INSERT INTO klant (voornaam, achternaam, geboortedatum) VALUES (?, ?, ?)";
+		Integer klantId = null;
 		try(Connection con = Connector.getInstance().getConnection(); PreparedStatement ps = con.prepareStatement(sql);) {
 			Date date = new Date(klant.getGeboorteDatum().getTime());
 			ps.setString(1, klant.getVoornaam());
 			ps.setString(2, klant.getAchternaam());
 			ps.setDate(3, date);
 			ps.executeUpdate();
+			return getLastId(con);
 		}
 		catch(SQLException e) {
 			e.printStackTrace();
@@ -84,5 +86,14 @@ public class KlantIOImpl implements KlantIO{
 			klantList.add(klant);
 		}
 		return klantList;
+	}
+	
+	//hulp methode om laast gemaakt klant_id te krijgen
+	private Integer getLastId(Connection con) throws SQLException {
+		try(Statement st = con.createStatement(); 
+			ResultSet rs = st.executeQuery ("SELECT last_insert_id() AS last_id FROM klant");) {
+			rs.next();
+			return rs.getInt("last_id");
+		}
 	}
 }
