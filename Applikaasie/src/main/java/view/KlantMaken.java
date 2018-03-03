@@ -18,27 +18,15 @@ import javafx.scene.text.*;
 @SuppressWarnings("restriction")
 public class KlantMaken {
 	
-	
-	public Scene getKlantMakenScene(Scene homeScene, Stage stage, Applikaasie applikaasie) {
-		GridPane pane = makeGridPane(stage, homeScene, applikaasie);
-		Scene klantMakenscene = new Scene(pane);
-		return klantMakenscene;
-	}
-	
-	
-	private GridPane makeGridPane(Stage stage, Scene homeScene, Applikaasie applikaasie) {
+	public GridPane makeGridPane(Stage stage, Scene homeScene, Applikaasie applikaasie) {
 		
 		//crieeren velden for grid pane
 		Button homeButton = getHomeButton(stage, homeScene);
 		Label titel = new Label("Invullen formulier");
 		Label voornaamLabel = new Label("voornaam:");
 		TextField voornaamTextfield = new TextField();
-		Text voornaamSterretje = new Text("*");
 		Label achterNaamLabel = new Label("achternaam:");
 		TextField achternaamTextField = new TextField();
-		Text achternaamSterretje = new Text("*");
-		Label geboorteDatumLabel = new Label("geboorte datum:");
-		DatePicker geboorteDatumPicker = new DatePicker();
 		Label straatNaamLabel = new Label("straat naam:");
 		TextField straatNaamTextField = new TextField();
 		Label huisnummerLabel = new Label("huisnummer:");
@@ -54,12 +42,17 @@ public class KlantMaken {
 		
 		//event handler of registratie buton
 		registratieButton.setOnAction(e -> {
-			LocalDate localDate = geboorteDatumPicker.getValue();
-			Date date = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
 			try {
-				applikaasie.maakNieuweKlantenAdres(voornaamTextfield.getText(), achternaamTextField.getText(), date, 
+				applikaasie.maakNieuweKlantenAdres(voornaamTextfield.getText(), achternaamTextField.getText(), 
 												straatNaamTextField.getText(), huisnummerTextField.getText(), toevoegingHuisnummerTextField.getText(), 
-																								postcodeTextField.getText(), woonplaatsTextField.getText());
+																																postcodeTextField.getText(), woonplaatsTextField.getText());
+				voornaamTextfield.clear();
+				achternaamTextField.clear();
+				straatNaamTextField.clear();
+				huisnummerTextField.clear();
+				toevoegingHuisnummerTextField.clear();
+				postcodeTextField.clear();
+				woonplaatsTextField.clear();
 			} catch (ExceptionIO e1) {
 				
 				e1.printStackTrace();
@@ -79,12 +72,8 @@ public class KlantMaken {
 		pane.add(titel, 1, 0);
 		pane.add(voornaamLabel, 0, 1);
 		pane.add(voornaamTextfield, 1, 1);
-		pane.add(voornaamSterretje, 2, 1);
 		pane.add(achterNaamLabel, 0, 2);
 		pane.add(achternaamTextField, 1, 2);
-		pane.add(achternaamSterretje, 2, 2);
-		pane.add(geboorteDatumLabel, 0, 3);
-		pane.add(geboorteDatumPicker, 1, 3);
 		pane.add(straatNaamLabel, 0, 4);
 		pane.add(straatNaamTextField, 1, 4);
 		pane.add(huisnummerLabel, 0, 5);

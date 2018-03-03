@@ -30,13 +30,11 @@ public class KlantIOImpl implements KlantIO{
 	//een nieuwe klant in databse maken
 	@Override
 	public Integer maakNieuweKlant(Klant klant) throws ExceptionIO {
-		String sql = "INSERT INTO klant (voornaam, achternaam, geboortedatum) VALUES (?, ?, ?)";
+		String sql = "INSERT INTO klant (voornaam, achternaam) VALUES (?, ?)";
 		Integer klantId = null;
 		try(Connection con = Connector.getInstance().getConnection(); PreparedStatement ps = con.prepareStatement(sql);) {
-			Date date = new Date(klant.getGeboorteDatum().getTime());
 			ps.setString(1, klant.getVoornaam());
 			ps.setString(2, klant.getAchternaam());
-			ps.setDate(3, date);
 			ps.executeUpdate();
 			return getLastId(con);
 		}
@@ -82,7 +80,7 @@ public class KlantIOImpl implements KlantIO{
 		ArrayList<Klant> klantList = new ArrayList<Klant>();
 		while(rs.next()) {
 			Klant klant = new Klant.KlantBuilder(rs.getString("voornaam"), rs.getString("achternaam")).
-					idKlant(rs.getInt("klant_id")).geboorteDatum(rs.getDate("geboortedatum")).build();
+					idKlant(rs.getInt("klant_id")).build();
 			klantList.add(klant);
 		}
 		return klantList;

@@ -6,7 +6,6 @@ public class Klant {
 	
 	private final String voornaam;
 	private final String achternaam;
-	private final Date geboorteDatum;
 	private final Integer klantId;
 	
 	
@@ -15,7 +14,6 @@ public class Klant {
 		this.voornaam = klantBuilder.voornaam;
 		this.achternaam = klantBuilder.achternaam;
 		this.klantId = klantBuilder.idKlant;
-		this.geboorteDatum = klantBuilder.geboorteDatum;
 	}
 	
 	
@@ -23,7 +21,6 @@ public class Klant {
 		
 		private final String voornaam;
 		private final String achternaam;
-		private Date geboorteDatum = null;
 		private Integer idKlant = -1;
 		
 		public KlantBuilder(String voornaam, String achterNaam) {
@@ -33,11 +30,6 @@ public class Klant {
 		
 		public KlantBuilder idKlant(Integer idKlant) {
 			this.idKlant = idKlant;
-			return this;
-		}
-		
-		public KlantBuilder geboorteDatum(Date geboorteDatum) {
-			this.geboorteDatum = geboorteDatum;
 			return this;
 		}
 		
@@ -60,9 +52,6 @@ public class Klant {
 		return klantId;
 	}
 
-	public Date getGeboorteDatum() {
-		return geboorteDatum;
-	}
-		
+	
 }
 

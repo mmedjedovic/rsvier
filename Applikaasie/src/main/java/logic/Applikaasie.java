@@ -26,9 +26,9 @@ public class Applikaasie {
 	
 		
 		
-		public void maakNieuweKlantenAdres(String voornaam, String achternaam, Date geboorteDatum,
-				String straatNaam, String huisnummer, String toevoegingHuisnummer, String postcode, String woonplaats) throws ExceptionIO {
-			Klant klant = new Klant.KlantBuilder(voornaam, achternaam).geboorteDatum(geboorteDatum).build();
+		public void maakNieuweKlantenAdres(String voornaam, String achternaam, String straatNaam, 
+				String huisnummer, String toevoegingHuisnummer, String postcode, String woonplaats) throws ExceptionIO {
+			Klant klant = new Klant.KlantBuilder(voornaam, achternaam).build();
 			KlantIOImpl klantIo = KlantIOImpl.getInstance();
 			Integer klantId = klantIo.maakNieuweKlant(klant);
 			Adres adres = new Adres.AdresBuilder(klantId).straatNaam(straatNaam).huisnummer(huisnummer).
@@ -37,7 +37,13 @@ public class Applikaasie {
 			adresIo.maakNieuweAdres(adres);
 		}
 		
+		public ArrayList<Klant> getKlantenLijst() throws ExceptionIO {
+			return KlantIOImpl.getInstance().getKlanten();
+		}
 		
+		public Adres getAdres(Integer klantId) throws ExceptionIO {
+			return AdresIOImpl.getInstance().getAdres(klantId);
+		}
 		
 		
 		

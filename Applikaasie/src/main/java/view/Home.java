@@ -2,6 +2,7 @@ package view;
 
 import javafx.stage.*;
 import logic.Applikaasie;
+import util.ExceptionIO;
 import javafx.application.*;
 import javafx.scene.control.*;
 import javafx.geometry.*;
@@ -11,11 +12,13 @@ import javafx.scene.*;
 @SuppressWarnings("restriction")
 public class Home extends Application{
 	
-	Applikaasie applikassie = new Applikaasie();
+	Applikaasie applikaasie = new Applikaasie();
 	Scene homeScene;
+	Stage stage;
 	
 	public void start(Stage stage) {
 		
+		this.stage = stage;
 		stage.setTitle("Applikassie");
 		
 		//Opzetten knoppen voor klant, bestelling en artikel
@@ -70,7 +73,8 @@ public class Home extends Application{
 		buttonNewKlant.setOnAction(e -> {
 			System.out.println("nieuwklant gedrukt");
 			KlantMaken klantMaken = new KlantMaken();
-			Scene klantMakenScene = klantMaken.getKlantMakenScene(homeScene, stage, applikassie);
+			GridPane klantMakenGridPane = klantMaken.makeGridPane(stage, homeScene, applikaasie);
+			Scene klantMakenScene = new Scene(klantMakenGridPane, 400, 400);
 			stage.setScene(klantMakenScene);
 		});
 		return buttonNewKlant;
@@ -80,6 +84,15 @@ public class Home extends Application{
 		Button buttonOverzichtKlant = new Button("overzicht maken");
 		buttonOverzichtKlant.setOnAction(e -> {
 			System.out.println("overzichtklant gedrukt");
+			KlantenOverzicht klantenOverzicht = new KlantenOverzicht();
+			try {
+				BorderPane klantOverzichtPane = klantenOverzicht.getBorderPane(applikaasie);
+				Scene klantOverzichtScene = new Scene(klantOverzichtPane, 800, 400);
+				stage.setScene(klantOverzichtScene);
+			} catch (ExceptionIO e1) {
+				// TODO Auto-generated catch b
+				e1.printStackTrace();
+			}
 		});
 		return buttonOverzichtKlant;
 	}
