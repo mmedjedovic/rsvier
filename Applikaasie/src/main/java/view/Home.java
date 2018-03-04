@@ -23,30 +23,15 @@ public class Home extends Application{
 		
 		//Opzetten knoppen voor klant, bestelling en artikel
 		Label klantLabel = new Label("Klant");
-		HBox klantHBox = getKlantHBox(stage);
+		HBox klantHBox = getKlantHBox();
 		Label artikelLabel = new Label("Artikel");
 		HBox artikelHBox = getArtikelHBox();
 		Label bestellingLabel = new Label("Bestelling");
 		HBox bestellingHBox = getBestellingHBox();
 		
-		/**
-		//verikal boxen voor elke kategorie appart
-		VBox vBoxKlant = new VBox();
-		vBoxKlant.setPadding(new Insets(10, 10, 10, 10));
-		vBoxKlant.getChildren().addAll(klantLabel, klantFlowPane);
-		
-		VBox vBoxArtikel = new VBox();
-		vBoxArtikel.setPadding(new Insets(10, 10, 10, 10));
-		vBoxArtikel.getChildren().addAll(artikelLabel, artikelFlowPane);
-		
-		VBox vBoxBestelling = new VBox();
-		vBoxBestelling.setPadding(new Insets(10, 10, 10, 10));
-		vBoxBestelling.getChildren().addAll(bestellingLabel, bestellingFlowPane);*/
-		
-		
+		//alle nodes in Vbox stoppen
 		VBox vBox = new VBox();
 		vBox.setPadding(new Insets(10, 10, 10, 10));
-		//vBox.getChildren().addAll(vBoxKlant, vBoxBestelling, vBoxArtikel);
 		vBox.getChildren().addAll(klantLabel, klantHBox, artikelLabel, artikelHBox, bestellingLabel, bestellingHBox);
 		
 		BorderPane borderPane = new BorderPane();
@@ -59,20 +44,19 @@ public class Home extends Application{
 		stage.show();
 	}
 	
-	private HBox getKlantHBox(Stage stage) {
-		Button buttonNewKlant = getButtonNewKlant(stage);
+	private HBox getKlantHBox() {
+		Button buttonNewKlant = getButtonNewKlant();
 		Button buttonOverzichtKlant = getButtonOverzichtKlant();
-		HBox klantFlowPane = new HBox();
-		klantFlowPane.setPadding(new Insets(10, 10, 20, 10));
-		klantFlowPane.setSpacing(5);
-		klantFlowPane.getChildren().addAll(buttonNewKlant, buttonOverzichtKlant);
-		return klantFlowPane;
+		HBox klantHBox = new HBox();
+		klantHBox.setPadding(new Insets(10, 10, 20, 10));
+		klantHBox.setSpacing(5);
+		klantHBox.getChildren().addAll(buttonNewKlant, buttonOverzichtKlant);
+		return klantHBox;
 	}
 	
-	private Button getButtonNewKlant(Stage stage) {
+	private Button getButtonNewKlant() {
 		Button buttonNewKlant = new Button("nieuwe maken");
 		buttonNewKlant.setOnAction(e -> {
-			System.out.println("nieuwklant gedrukt");
 			KlantMaken klantMaken = new KlantMaken();
 			GridPane klantMakenGridPane = klantMaken.makeGridPane(stage, homeScene, applikaasie);
 			Scene klantMakenScene = new Scene(klantMakenGridPane, 400, 400);
@@ -101,17 +85,20 @@ public class Home extends Application{
 	private HBox getArtikelHBox() {
 		Button buttonNewArtikel = getButtonNewArtikel();
 		Button buttonOverzichtArtikel = getButtonOverzichtArtikel();
-		HBox artikelFlowPane = new HBox();
-		artikelFlowPane.setPadding(new Insets(10, 10, 20, 10));
-		artikelFlowPane.setSpacing(5);
-		artikelFlowPane.getChildren().addAll(buttonNewArtikel, buttonOverzichtArtikel);
-		return artikelFlowPane;
+		HBox artikelHBox = new HBox();
+		artikelHBox.setPadding(new Insets(10, 10, 20, 10));
+		artikelHBox.setSpacing(5);
+		artikelHBox.getChildren().addAll(buttonNewArtikel, buttonOverzichtArtikel);
+		return artikelHBox;
 	}
 	
 	private Button getButtonNewArtikel() {
 		Button buttonNewArtikel = new Button("nieuw  maken");
 		buttonNewArtikel.setOnAction(e -> {
-			System.out.println("newartikel gedrukt");
+			ArtikelMaken artikelMaken = new ArtikelMaken();
+			GridPane artikelMakenGridPane = artikelMaken.makeGridPane(stage, homeScene, applikaasie);
+			Scene scene = new Scene(artikelMakenGridPane, 400, 400);
+			stage.setScene(scene);
 		});
 		return buttonNewArtikel;
 	}
@@ -119,7 +106,15 @@ public class Home extends Application{
 	private Button getButtonOverzichtArtikel() {
 		Button buttonOverzichtArtikel = new Button("overzicht maken");
 		buttonOverzichtArtikel.setOnAction(e -> {
-			System.out.println("overzichartikel gedrukt");
+			ArtikelOverzicht artikelOverzicht = new ArtikelOverzicht();
+			try {
+				BorderPane pane = artikelOverzicht.getBorderPane(stage, homeScene, applikaasie, this);
+				Scene scene = new Scene(pane, 800, 300);
+				stage.setScene(scene);
+			} catch (ExceptionIO e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		});
 		return buttonOverzichtArtikel;
 	}

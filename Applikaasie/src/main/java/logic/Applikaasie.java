@@ -12,12 +12,9 @@ import io.data.AdresIOImpl;
 import io.data.BestellingTotaalIOImpl;
 import io.data.KaasIOImpl;
 import io.data.KlantIOImpl;
-import model.Bestelling;
-import model.Bestelling.Status;
-import model.Klant;
-import model.Klant.KlantBuilder;
+import model.*;
 import util.ExceptionIO;
-import model.Adres;
+
 
 
 public class Applikaasie {
@@ -49,9 +46,20 @@ public class Applikaasie {
 			return AdresIOImpl.getInstance().getAdres(klantId);
 		}
 		
-	
+		public void artikelMaken(String kaasNaam, Double prijsInKg, Double voorraadInKg) throws ExceptionIO {
+			BigDecimal prijsInKgBigDec = BigDecimal.valueOf(prijsInKg);
+			BigDecimal vooraadInKgBigdec = BigDecimal.valueOf(voorraadInKg);
+			Kaas kaas = new Kaas.KaasBuilder(kaasNaam).prijsInKg(prijsInKgBigDec).vooraadInKg(vooraadInKgBigdec).build();
+			KaasIOImpl.getInstance().nieuweKaasMaken(kaas);
+		}
 		
+		public void deleteKaas(Integer kaasId) throws ExceptionIO {
+			KaasIOImpl.getInstance().deleteKaas(kaasId);
+		}
 		
+		public ArrayList<Kaas> getKaasLijst() throws ExceptionIO {
+			return KaasIOImpl.getInstance().getKazenLijst();
+		}
 		
 		
 		

@@ -21,21 +21,20 @@ import javafx.scene.control.*;
 
 
 
+@SuppressWarnings("restriction")
 public class KlantenOverzicht {
 	
 	Integer klantId;
 	ArrayList<Klant> klantLijst;
 	ListView<Klant> klantListView;
-	Home home;
 	Scene homeScene;
 	Stage stage;
 	
-	@SuppressWarnings("restriction")
+	
 	public BorderPane getBorderPane(Stage stage, Scene homeScene, Applikaasie applikaasie, Home home) throws ExceptionIO {
 		
-		this.home = home;
-		this.stage = stage;
 		this.homeScene = homeScene;
+		this.stage = stage;
 		
 		BorderPane borderPane = new BorderPane();
 		
@@ -121,10 +120,7 @@ public class KlantenOverzicht {
 			}
 		});	
 		//stoppen klantenlijst in Vbox
-		klantenLijstVBox.getChildren().addAll(klantListView);
-		
-		
-		
+		klantenLijstVBox.getChildren().addAll(klantListView);	
 		
 		return borderPane;	
 	}

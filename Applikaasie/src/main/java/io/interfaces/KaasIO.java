@@ -15,6 +15,8 @@ public interface KaasIO {
 	
 	public ArrayList<Kaas> getKazenLijst() throws ExceptionIO;
 	
+	public void deleteKaas(Integer kaasId) throws ExceptionIO;
+	
 	public void vooraadAanpassen(Kaas kaas, BigDecimal nieuweVooraad, Connection con) throws ExceptionIO;
 	
 }

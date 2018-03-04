@@ -68,6 +68,19 @@ public class KaasIOImpl implements KaasIO{
 		}
 	}
 	
+	//Kaas vrwijderen uit assortimen
+	@Override
+	public void deleteKaas(Integer kaasId) throws ExceptionIO {
+		String sql = "DELETE from kaas WHERE kaas_id = ?";
+		try(Connection con = Connector.getInstance().getConnection(); PreparedStatement ps = con.prepareStatement(sql);) {
+			ps.setInt(1, kaasId);
+			ps.executeUpdate();
+		}
+		catch(SQLException e) {
+			e.printStackTrace();
+			throw new ExceptionIO("Niet gelukt beterffende kaas uit database te werwijderen");
+		}
+	}
 	
 	//vooraad aantaal aanpassen
 	@Override

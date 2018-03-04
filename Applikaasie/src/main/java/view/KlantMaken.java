@@ -1,22 +1,19 @@
 package view;
 
-import javafx.stage.*;
+
 import logic.Applikaasie;
 import util.ExceptionIO;
 
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Date;
-
-import javafx.application.*;
 import javafx.scene.control.*;
 import javafx.geometry.*;
 import javafx.scene.layout.*;
 import javafx.scene.*;
 import javafx.scene.text.*;
+import javafx.stage.*;
 
 @SuppressWarnings("restriction")
 public class KlantMaken {
+	
 	
 	public GridPane makeGridPane(Stage stage, Scene homeScene, Applikaasie applikaasie) {
 		
@@ -38,9 +35,8 @@ public class KlantMaken {
 		Label woonplaatsLabel = new Label("woonplaats:");
 		TextField woonplaatsTextField = new TextField();
 		Button registratieButton = new Button("registreer");
-		Text info = new Text("Velden met sterretjes zijn verplicht!");
 		
-		//event handler of registratie buton
+		//event handler voor registratie buton
 		registratieButton.setOnAction(e -> {
 			try {
 				applikaasie.maakNieuweKlantenAdres(voornaamTextfield.getText(), achternaamTextField.getText(), 
@@ -85,10 +81,11 @@ public class KlantMaken {
 		pane.add(woonplaatsLabel, 0, 8);
 		pane.add(woonplaatsTextField, 1, 8);
 		pane.add(registratieButton, 1, 9);
-		pane.add(info, 1, 10);
 		
 		return pane;
 	}
+	
+	
 	
 	private Button getHomeButton(Stage stage, Scene homeScene) {
 		Button homeButton = new Button("Home");
