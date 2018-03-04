@@ -61,6 +61,7 @@ public class KlantenOverzicht {
 		deleteButton.setOnAction(e -> {
 			try {
 				applikaasie.deleteKlant(klantId);
+				this.stage.setScene(homeScene);
 			} catch (ExceptionIO e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();

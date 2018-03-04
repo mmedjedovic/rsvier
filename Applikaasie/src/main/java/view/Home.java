@@ -23,12 +23,13 @@ public class Home extends Application{
 		
 		//Opzetten knoppen voor klant, bestelling en artikel
 		Label klantLabel = new Label("Klant");
-		FlowPane klantFlowPane = getKlantFlowPane(stage);
+		HBox klantHBox = getKlantHBox(stage);
 		Label artikelLabel = new Label("Artikel");
-		FlowPane artikelFlowPane = getArtikelFlowPane();
+		HBox artikelHBox = getArtikelHBox();
 		Label bestellingLabel = new Label("Bestelling");
-		FlowPane bestellingFlowPane = getBestellingFlowPane();
+		HBox bestellingHBox = getBestellingHBox();
 		
+		/**
 		//verikal boxen voor elke kategorie appart
 		VBox vBoxKlant = new VBox();
 		vBoxKlant.setPadding(new Insets(10, 10, 10, 10));
@@ -40,12 +41,13 @@ public class Home extends Application{
 		
 		VBox vBoxBestelling = new VBox();
 		vBoxBestelling.setPadding(new Insets(10, 10, 10, 10));
-		vBoxBestelling.getChildren().addAll(bestellingLabel, bestellingFlowPane);
+		vBoxBestelling.getChildren().addAll(bestellingLabel, bestellingFlowPane);*/
 		
 		
 		VBox vBox = new VBox();
 		vBox.setPadding(new Insets(10, 10, 10, 10));
-		vBox.getChildren().addAll(vBoxKlant, vBoxBestelling, vBoxArtikel);
+		//vBox.getChildren().addAll(vBoxKlant, vBoxBestelling, vBoxArtikel);
+		vBox.getChildren().addAll(klantLabel, klantHBox, artikelLabel, artikelHBox, bestellingLabel, bestellingHBox);
 		
 		BorderPane borderPane = new BorderPane();
 		borderPane.setLeft(vBox);
@@ -57,13 +59,12 @@ public class Home extends Application{
 		stage.show();
 	}
 	
-	private FlowPane getKlantFlowPane(Stage stage) {
+	private HBox getKlantHBox(Stage stage) {
 		Button buttonNewKlant = getButtonNewKlant(stage);
 		Button buttonOverzichtKlant = getButtonOverzichtKlant();
-		FlowPane klantFlowPane = new FlowPane();
+		HBox klantFlowPane = new HBox();
 		klantFlowPane.setPadding(new Insets(10, 10, 20, 10));
-		klantFlowPane.setVgap(5);
-		klantFlowPane.setHgap(5);
+		klantFlowPane.setSpacing(5);
 		klantFlowPane.getChildren().addAll(buttonNewKlant, buttonOverzichtKlant);
 		return klantFlowPane;
 	}
@@ -97,19 +98,18 @@ public class Home extends Application{
 		return buttonOverzichtKlant;
 	}
 	
-	private FlowPane getArtikelFlowPane() {
+	private HBox getArtikelHBox() {
 		Button buttonNewArtikel = getButtonNewArtikel();
 		Button buttonOverzichtArtikel = getButtonOverzichtArtikel();
-		FlowPane artikelFlowPane = new FlowPane();
+		HBox artikelFlowPane = new HBox();
 		artikelFlowPane.setPadding(new Insets(10, 10, 20, 10));
-		artikelFlowPane.setVgap(5);
-		artikelFlowPane.setHgap(5);
+		artikelFlowPane.setSpacing(5);
 		artikelFlowPane.getChildren().addAll(buttonNewArtikel, buttonOverzichtArtikel);
 		return artikelFlowPane;
 	}
 	
 	private Button getButtonNewArtikel() {
-		Button buttonNewArtikel = new Button("nieuw maken");
+		Button buttonNewArtikel = new Button("nieuw  maken");
 		buttonNewArtikel.setOnAction(e -> {
 			System.out.println("newartikel gedrukt");
 		});
@@ -124,13 +124,12 @@ public class Home extends Application{
 		return buttonOverzichtArtikel;
 	}
 	
-	private FlowPane getBestellingFlowPane() {
+	private HBox getBestellingHBox() {
 		Button buttonNewBestelling = getButtonNewBestelling();
 		Button buttonOverzichtBestelling = getButtonOverzichtBesteling();
-		FlowPane bestellingFlowPane = new FlowPane();
+		HBox bestellingFlowPane = new HBox();
 		bestellingFlowPane.setPadding(new Insets(10, 10, 20, 10));
-		bestellingFlowPane.setVgap(5);
-		bestellingFlowPane.setHgap(5);
+		bestellingFlowPane.setSpacing(5);
 		bestellingFlowPane.getChildren().addAll(buttonNewBestelling, buttonOverzichtBestelling);
 		return bestellingFlowPane;
 	}
