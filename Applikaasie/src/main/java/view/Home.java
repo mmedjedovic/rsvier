@@ -86,7 +86,7 @@ public class Home extends Application{
 			System.out.println("overzichtklant gedrukt");
 			KlantenOverzicht klantenOverzicht = new KlantenOverzicht();
 			try {
-				BorderPane klantOverzichtPane = klantenOverzicht.getBorderPane(applikaasie);
+				BorderPane klantOverzichtPane = klantenOverzicht.getBorderPane(stage, homeScene, applikaasie, this);
 				Scene klantOverzichtScene = new Scene(klantOverzichtPane, 800, 400);
 				stage.setScene(klantOverzichtScene);
 			} catch (ExceptionIO e1) {

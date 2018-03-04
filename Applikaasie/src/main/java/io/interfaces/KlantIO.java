@@ -12,5 +12,7 @@ public interface KlantIO {
 	public Klant getKlant(Integer klantId) throws ExceptionIO;
 	
 	public ArrayList<Klant> getKlanten() throws ExceptionIO;
+	
+	public void deleteKlant(Integer klantId) throws ExceptionIO;
 
 }

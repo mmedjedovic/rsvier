@@ -41,9 +41,15 @@ public class Applikaasie {
 			return KlantIOImpl.getInstance().getKlanten();
 		}
 		
+		public void deleteKlant(Integer klantId) throws ExceptionIO {
+			KlantIOImpl.getInstance().deleteKlant(klantId);
+		}
+		
 		public Adres getAdres(Integer klantId) throws ExceptionIO {
 			return AdresIOImpl.getInstance().getAdres(klantId);
 		}
+		
+	
 		
 		
 		

@@ -16,32 +16,71 @@ import javafx.scene.*;
 import javafx.scene.text.*;
 import javafx.util.*;
 import javafx.collections.*;
+import javafx.stage.*;
+import javafx.scene.control.*;
 
 
 
 public class KlantenOverzicht {
 	
-	
-	
+	Integer klantId;
+	ArrayList<Klant> klantLijst;
+	ListView<Klant> klantListView;
+	Home home;
+	Scene homeScene;
+	Stage stage;
 	
 	@SuppressWarnings("restriction")
-	public BorderPane getBorderPane(Applikaasie applikaasie) throws ExceptionIO {
+	public BorderPane getBorderPane(Stage stage, Scene homeScene, Applikaasie applikaasie, Home home) throws ExceptionIO {
+		
+		this.home = home;
+		this.stage = stage;
+		this.homeScene = homeScene;
 		
 		BorderPane borderPane = new BorderPane();
 		
+		
+		//Pane voor adres details
 		GridPane adresGridPane = new GridPane();
 		adresGridPane.setPadding(new Insets(10, 10, 10, 10));
 		adresGridPane.setVgap(5);
 		adresGridPane.setHgap(5);
 		
+		//Vbox voor lijst van klanten namen 
 		VBox klantenLijstVBox = new VBox();
 		klantenLijstVBox.setPadding(new Insets(10, 10, 10, 10));
 		
+		
+		//Button voor home
+		Button homeButton = new Button("home");
+		homeButton.setOnAction(e -> {
+			this.stage.setScene(homeScene);
+		});
+		//Button voor verwijderen van een klant
+		Button deleteButton = new Button("delete");
+		deleteButton.setOnAction(e -> {
+			try {
+				applikaasie.deleteKlant(klantId);
+			} catch (ExceptionIO e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}	 
+		});
+		//Hbox voor buttons
+		HBox buttonHbox = new HBox();
+		buttonHbox.setPadding(new Insets(10, 10, 10, 10));
+		buttonHbox.setSpacing(5);
+		buttonHbox.getChildren().addAll(homeButton, deleteButton);
+		
+		//Stoppen nodes in Border pane 
 		borderPane.setLeft(new ScrollPane(klantenLijstVBox));
 		borderPane.setCenter(adresGridPane);
+		borderPane.setTop(buttonHbox);
 		
-		ArrayList<Klant> klantLijst = applikaasie.getKlantenLijst();
-		ListView<Klant> klantListView = new ListView<Klant>(FXCollections.observableArrayList(klantLijst));
+		
+		//Lijst van klanten converteren naar List View
+		klantLijst = applikaasie.getKlantenLijst();
+		klantListView = new ListView<Klant>(FXCollections.observableArrayList(klantLijst));
 		klantListView.setCellFactory(new Callback<ListView<Klant>, ListCell<Klant>>() {
 			@Override
 			public ListCell<Klant> call(ListView<Klant> list) {
@@ -57,12 +96,11 @@ public class KlantenOverzicht {
 				return cell;
 			}
 		});
-		
 		klantListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 		
-		//implementation listener invalidation listener
+		//implementation invalidation listener
 		klantListView.getSelectionModel().selectedItemProperty().addListener(ov -> {
-			Integer klantId = klantListView.getSelectionModel().getSelectedItem().getKlantId();
+			klantId = klantListView.getSelectionModel().getSelectedItem().getKlantId();
 			adresGridPane.getChildren().clear();
 			try {
 				Adres adres = applikaasie.getAdres(klantId);
@@ -80,10 +118,13 @@ public class KlantenOverzicht {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		});
-		
+		});	
 		//stoppen klantenlijst in Vbox
 		klantenLijstVBox.getChildren().addAll(klantListView);
+		
+		
+		
+		
 		return borderPane;	
 	}
 }

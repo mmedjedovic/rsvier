@@ -75,6 +75,19 @@ public class KlantIOImpl implements KlantIO{
 		}
 	}
 	
+	@Override
+	public void deleteKlant(Integer klantId) throws ExceptionIO {
+		String sql = "DELETE from klant WHERE klant_id =?";
+		try(Connection con = Connector.getInstance().getConnection(); PreparedStatement ps = con.prepareStatement(sql);) {
+			ps.setInt(1, klantId);
+			ps.executeUpdate();
+		}
+		catch(SQLException e) {
+			e.printStackTrace();
+			throw new ExceptionIO("Niet gelukt beterffende klant uit database te werwijderen");
+		}
+	}
+	
 	//hulp methode om lijst van klanten te maken
 	private ArrayList<Klant> maakKlantenList(ResultSet rs) throws SQLException {
 		ArrayList<Klant> klantList = new ArrayList<Klant>();
