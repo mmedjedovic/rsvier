@@ -3,8 +3,8 @@ package view;
 import util.*;
 import java.math.*;
 import java.util.ArrayList;
-
-import javax.swing.plaf.basic.BasicTreeUI.SelectionModelPropertyChangeHandler;
+import logic.Applikaasie;
+import model.Kaas;
 
 import javafx.collections.*;
 import javafx.scene.control.*;
@@ -14,11 +14,8 @@ import javafx.scene.*;
 import javafx.scene.text.*;
 import javafx.stage.*;
 import javafx.util.Callback;
-import logic.Applikaasie;
-import model.Kaas;
 import javafx.application.*;
 import javafx.util.*;
-
 
 
 @SuppressWarnings("restriction")
@@ -67,7 +64,7 @@ public class ArtikelOverzicht {
 					@Override
 					protected void updateItem(Kaas k, boolean b) {
 						if(k != null) {
-							setText("Naam: " + k.getNaam() + "     prijs per kg: " + k.getPrijsInKg() + "     voorraad in kg: " + k.getVooraadInKg());
+							setText("Naam: " + k.getNaam() + "     prijs per kg: " + k.getPrijsInKg() + "     voorraad in kg: " + k.getVooraadInKg() + "    kaas id " + k.getKaasId());
 						}
 					}
 				};
@@ -80,6 +77,7 @@ public class ArtikelOverzicht {
 		kaasListView.getSelectionModel().selectedItemProperty().addListener(ov -> {
 			kaasId = kaasListView.getSelectionModel().getSelectedItem().getKaasId();
 		});
+		
 		
 		VBox kaasListViewVbox = new VBox();
 		kaasListViewVbox.setPrefWidth(800);

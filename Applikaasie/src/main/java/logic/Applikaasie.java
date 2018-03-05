@@ -60,15 +60,5 @@ public class Applikaasie {
 		public ArrayList<Kaas> getKaasLijst() throws ExceptionIO {
 			return KaasIOImpl.getInstance().getKazenLijst();
 		}
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
 	
 }

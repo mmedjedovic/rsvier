@@ -6,18 +6,14 @@ import java.util.ArrayList;
 import logic.Applikaasie;
 import model.Klant;
 import model.Adres;
-import util.DateToString;
 import util.ExceptionIO;
-import javafx.application.*;
 import javafx.scene.control.*;
 import javafx.geometry.*;
 import javafx.scene.layout.*;
 import javafx.scene.*;
-import javafx.scene.text.*;
 import javafx.util.*;
 import javafx.collections.*;
 import javafx.stage.*;
-import javafx.scene.control.*;
 
 
 
@@ -29,9 +25,10 @@ public class KlantenOverzicht {
 	ListView<Klant> klantListView;
 	Scene homeScene;
 	Stage stage;
+	Scene klantOverzichtScene;
 	
 	
-	public BorderPane getBorderPane(Stage stage, Scene homeScene, Applikaasie applikaasie, Home home) throws ExceptionIO {
+	public Scene getBorderPaneScene(Stage stage, Scene homeScene, Applikaasie applikaasie, Home home) throws ExceptionIO {
 		
 		this.homeScene = homeScene;
 		this.stage = stage;
@@ -107,7 +104,7 @@ public class KlantenOverzicht {
 				adresGridPane.add(new Label("Straat naam:"), 0, 0);
 				adresGridPane.add(new Label(adres.getStraatNaam()), 1, 0);
 				adresGridPane.add(new Label("Huisnummer:"), 0, 1);
-				adresGridPane.add(new Label(adres.getStraatNaam()), 1, 1);
+				adresGridPane.add(new Label(adres.getHuisnummer()), 1, 1);
 				adresGridPane.add(new Label("Toevoegingshuisnummer:"), 0, 2);
 				adresGridPane.add(new Label(adres.getToevoegingHuisnummer()), 1, 2);
 				adresGridPane.add(new Label("Postcode:"), 0, 3);
@@ -122,6 +119,6 @@ public class KlantenOverzicht {
 		//stoppen klantenlijst in Vbox
 		klantenLijstVBox.getChildren().addAll(klantListView);	
 		
-		return borderPane;	
+		return new Scene(borderPane, 800, 400);	
 	}
 }
