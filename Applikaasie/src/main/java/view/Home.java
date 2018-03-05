@@ -69,15 +69,16 @@ public class Home extends Application{
 		Button buttonOverzichtKlant = new Button("overzicht maken");
 		buttonOverzichtKlant.setOnAction(e -> {
 			System.out.println("overzichtklant gedrukt");
-			KlantenOverzicht klantenOverzicht = new KlantenOverzicht();
+			KlantenOverzicht klantenOverzicht = new KlantenOverzicht(stage, homeScene, applikaasie);
+			Scene scene;
 			try {
-				Scene klantOverzichtScene = klantenOverzicht.getBorderPaneScene(stage, homeScene, applikaasie, this);
-				
-				stage.setScene(klantOverzichtScene);
+				scene = klantenOverzicht.getBorderPaneScene();
+				stage.setScene(scene);
 			} catch (ExceptionIO e1) {
-				// TODO Auto-generated catch b
+				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
+			
 		});
 		return buttonOverzichtKlant;
 	}

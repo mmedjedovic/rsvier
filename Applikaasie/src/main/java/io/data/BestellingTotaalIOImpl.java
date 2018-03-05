@@ -31,7 +31,7 @@ public class BestellingTotaalIOImpl implements BestellingTotaalIO{
 		String sql = "INSERT INTO bestelling_totaal(klant_id, totaal_prijs, bestelling_datum, status) VALUES(?, ?, ?, ?)";
 		try(Connection con = Connector.getInstance().getConnection(); PreparedStatement ps = con.prepareStatement(sql);) {
 			Date bestellingDatum = new Date(bestelling.getBestellingDate().getTime());
-			ps.setInt(1,  bestelling.getKlant().getKlantId());
+			ps.setInt(1,  bestelling.getKlantId());
 			ps.setBigDecimal(2, bestelling.getTotaalPrijs());
 			ps.setDate(3, bestellingDatum);
 			ps.setString(4, bestelling.getStatus().name());
@@ -54,7 +54,7 @@ public class BestellingTotaalIOImpl implements BestellingTotaalIO{
 			try(ResultSet rs = ps.executeQuery();) {
 				KlantIOImpl klantIO = KlantIOImpl.getInstance();
 				Klant klant = klantIO.getKlant(klantId);
-				return hulpGetBestellingen(rs, klant);
+				return hulpGetBestellingen(rs, klantId);
 			}
 		}
 		catch(SQLException e) {
@@ -80,12 +80,12 @@ public class BestellingTotaalIOImpl implements BestellingTotaalIO{
 	
 	
 	//hulp methode om bestelligen  uit ResultSet te crieeren
-	private ArrayList<Bestelling> hulpGetBestellingen(ResultSet rs, Klant klant) throws SQLException {
+	private ArrayList<Bestelling> hulpGetBestellingen(ResultSet rs, Integer klantId) throws SQLException {
 		ArrayList<Bestelling> bestellingLijst = new ArrayList<Bestelling>();
 		while(rs.next()) {
 			java.util.Date date = new Date(rs.getDate("bestelling_datum").getTime());
 			Status status = Status.valueOf("OPEN");
-			Bestelling bestelling = new Bestelling.BestellingBuilder(klant).
+			Bestelling bestelling = new Bestelling.BestellingBuilder(klantId).
 					totaalPrijs(rs.getBigDecimal("totaal_prijs")).bestellingDate(date).bestellingId(rs.getInt("bestelling_id")).status(status).build();
 			bestellingLijst.add(bestelling);
 		}

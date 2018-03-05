@@ -7,12 +7,16 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Map;
 
 import io.data.AdresIOImpl;
+import io.data.BestellingDetailsIOImpl;
 import io.data.BestellingTotaalIOImpl;
 import io.data.KaasIOImpl;
 import io.data.KlantIOImpl;
+import io.interfaces.BestellingTotaalIO;
 import model.*;
+import model.Bestelling.Status;
 import util.ExceptionIO;
 
 
@@ -60,5 +64,24 @@ public class Applikaasie {
 		public ArrayList<Kaas> getKaasLijst() throws ExceptionIO {
 			return KaasIOImpl.getInstance().getKazenLijst();
 		}
+		
+		public void bestellingMaken(HashMap<Kaas, BigDecimal> besteldeKazenLijst, Integer klantId) throws ExceptionIO {
+			BigDecimal totaalPrijs = new BigDecimal(0);
+			Date date = new Date();
+			for(Map.Entry<Kaas, BigDecimal> entry: besteldeKazenLijst.entrySet()) {
+				totaalPrijs = totaalPrijs.add(entry.getKey().getPrijsInKg().multiply(entry.getValue()));
+			}
+			Bestelling bestelling = new Bestelling.BestellingBuilder(klantId).status(Status.OPEN).
+					besteldeKazenList(besteldeKazenLijst).bestellingDate(date).totaalPrijs(totaalPrijs).build();
+			BestellingTotaalIOImpl.getInstance().maakBestellingTotaal(bestelling);
+			BestellingDetailsIOImpl.getInstance().maakBestellingDetails(bestelling);
+		}
 	
+		
+		
+		
+		
+		
+		
+		
 }

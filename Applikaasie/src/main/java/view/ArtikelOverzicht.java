@@ -54,7 +54,7 @@ public class ArtikelOverzicht {
 			
 		});
 		
-		ArrayList<Kaas> kaasLijst = applikaasie.getKaasLijst();
+		kaasLijst = applikaasie.getKaasLijst();
 		kaasListView = new ListView<Kaas>(FXCollections.observableList(kaasLijst));
 		kaasListView.setCellFactory(new Callback<ListView<Kaas>, ListCell<Kaas>>() {
 			
@@ -63,8 +63,9 @@ public class ArtikelOverzicht {
 				ListCell<Kaas> cell = new ListCell<Kaas>() {
 					@Override
 					protected void updateItem(Kaas k, boolean b) {
+						super.updateItem(k, b);
 						if(k != null) {
-							setText("Naam: " + k.getNaam() + "     prijs per kg: " + k.getPrijsInKg() + "     voorraad in kg: " + k.getVooraadInKg() + "    kaas id " + k.getKaasId());
+							setText("Naam: " + k.getNaam() + "     prijs per kg: " + k.getPrijsInKg() + "     voorraad in kg: " + k.getVooraadInKg());
 						}
 					}
 				};

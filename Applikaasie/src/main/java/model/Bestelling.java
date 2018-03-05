@@ -9,7 +9,7 @@ public class Bestelling {
 	
 	private final HashMap<Kaas, BigDecimal> besteldeKazenList;
 	private final BigDecimal totaalPrijs;
-	private final Klant klant;
+	private final Integer klantId;
 	private final Date bestellingDate;
 	private final Status status;
 	private final Integer bestellingId;
@@ -19,7 +19,7 @@ public class Bestelling {
 	private Bestelling(BestellingBuilder bestellingBuilder) {
 		this.besteldeKazenList = bestellingBuilder.besteldeKazenList;
 		this.totaalPrijs = bestellingBuilder.totaalPrijs;
-		this.klant = bestellingBuilder.klant;
+		this.klantId = bestellingBuilder.klantId;
 		this.bestellingDate = bestellingBuilder.bestellingDate;
 		this.status = bestellingBuilder.status;
 		this.bestellingId = bestellingBuilder.bestellingId;
@@ -27,7 +27,7 @@ public class Bestelling {
 	
 	public static class BestellingBuilder {
 		
-		private final Klant klant;
+		private final Integer klantId;
 		private HashMap<Kaas, BigDecimal> besteldeKazenList;
 		private BigDecimal totaalPrijs;
 		private Date bestellingDate;
@@ -35,8 +35,8 @@ public class Bestelling {
 		private Integer bestellingId = -1;
 		
 		
-		public BestellingBuilder(Klant klant) {
-			this.klant = klant;
+		public BestellingBuilder(Integer klantId) {
+			this.klantId = klantId;
 		}
 		
 		public BestellingBuilder besteldeKazenList(HashMap<Kaas, BigDecimal> besteldeKazenList) {
@@ -78,8 +78,8 @@ public class Bestelling {
 		return totaalPrijs;
 	}
 
-	public Klant getKlant() {
-		return klant;
+	public Integer getKlantId() {
+		return klantId;
 	}
 
 	public Date getBestellingDate() {

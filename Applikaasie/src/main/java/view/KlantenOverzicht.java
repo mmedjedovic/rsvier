@@ -24,14 +24,18 @@ public class KlantenOverzicht {
 	ArrayList<Klant> klantLijst;
 	ListView<Klant> klantListView;
 	Scene homeScene;
-	Stage stage;
-	Scene klantOverzichtScene;
+	Stage homeStage;
 	
+	Applikaasie applikaasie;
 	
-	public Scene getBorderPaneScene(Stage stage, Scene homeScene, Applikaasie applikaasie, Home home) throws ExceptionIO {
-		
+	public KlantenOverzicht(Stage homeStage, Scene homeScene, Applikaasie applikaasie) {
+		this.homeStage = homeStage;
 		this.homeScene = homeScene;
-		this.stage = stage;
+		this.applikaasie = applikaasie;
+	}
+	
+	
+	public Scene getBorderPaneScene() throws ExceptionIO {
 		
 		BorderPane borderPane = new BorderPane();
 		
@@ -50,24 +54,38 @@ public class KlantenOverzicht {
 		//Button voor home
 		Button homeButton = new Button("home");
 		homeButton.setOnAction(e -> {
-			this.stage.setScene(homeScene);
+			this.homeStage.setScene(homeScene);
 		});
 		//Button voor verwijderen van een klant
 		Button deleteButton = new Button("delete");
 		deleteButton.setOnAction(e -> {
 			try {
 				applikaasie.deleteKlant(klantId);
-				this.stage.setScene(homeScene);
+				this.homeStage.setScene(homeScene);
 			} catch (ExceptionIO e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}	 
 		});
+		//Button voor maken nieuwe bestelling
+		Button nieuweBestelling = new Button("nieuwe bestelling");
+		nieuweBestelling.setOnAction(e -> {
+			try {
+				BestellingMaken bestellingMaken = new BestellingMaken(klantId, applikaasie, homeStage, homeScene, this.getBorderPaneScene());
+				Scene bestellingMakenScene = bestellingMaken.getGridPaneScene();
+				homeStage.setScene(bestellingMakenScene);
+			} catch (ExceptionIO e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		});
+		
+		
 		//Hbox voor buttons
 		HBox buttonHbox = new HBox();
 		buttonHbox.setPadding(new Insets(10, 10, 10, 10));
 		buttonHbox.setSpacing(5);
-		buttonHbox.getChildren().addAll(homeButton, deleteButton);
+		buttonHbox.getChildren().addAll(homeButton, deleteButton, nieuweBestelling);
 		
 		//Stoppen nodes in Border pane 
 		borderPane.setLeft(new ScrollPane(klantenLijstVBox));
