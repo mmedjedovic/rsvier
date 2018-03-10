@@ -15,18 +15,6 @@ import java.sql.Date;
 
 public class KlantIOImpl implements KlantIO{
 	
-	private static KlantIOImpl instance = null;
-	
-	private KlantIOImpl() {};
-	
-	public static KlantIOImpl getInstance() {
-		if(instance == null) {
-			instance = new KlantIOImpl();
-		}
-		return instance;
-	}
-	
-	
 	//een nieuwe klant in databse maken
 	@Override
 	public Integer maakNieuweKlant(Klant klant) throws ExceptionIO {

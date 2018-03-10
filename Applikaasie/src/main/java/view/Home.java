@@ -68,7 +68,6 @@ public class Home extends Application{
 	private Button getButtonOverzichtKlant() {
 		Button buttonOverzichtKlant = new Button("overzicht maken");
 		buttonOverzichtKlant.setOnAction(e -> {
-			System.out.println("overzichtklant gedrukt");
 			KlantenOverzicht klantenOverzicht = new KlantenOverzicht(stage, homeScene, applikaasie);
 			Scene scene;
 			try {

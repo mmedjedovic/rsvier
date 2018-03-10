@@ -11,22 +11,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 import io.interfaces.BestellingDetailsIO;
+import io.interfaces.FactoryIO;
+import io.interfaces.KaasIO;
 import model.Bestelling;
 import model.Kaas;
 import util.ExceptionIO;
 
 public class BestellingDetailsIOImpl implements BestellingDetailsIO{
 	
-	private static BestellingDetailsIOImpl instance = null;
-	
-	private BestellingDetailsIOImpl() {}
-	
-	public static BestellingDetailsIOImpl getInstance() {
-		if(instance == null) {
-			instance = new BestellingDetailsIOImpl();
-		}
-			return instance;
-	}
 	
 	//besteling in database opslaan in tabel van bestelling_details 
 	@Override
@@ -47,8 +39,9 @@ public class BestellingDetailsIOImpl implements BestellingDetailsIO{
 				BigDecimal huidigeVooraad = kaas.getVooraadInKg();
 				BigDecimal nieuweVooraad = huidigeVooraad.subtract(hoeveelheidInKg);
 				//vooraad aanpassen in kaas tabel
-				KaasIOImpl kaasIO = KaasIOImpl.getInstance();
-				kaasIO.vooraadAanpassen(kaas, nieuweVooraad, con);
+				FactoryIO factoryIo = FactoryIOImpl.gestInstance();
+				KaasIO kaasIo = factoryIo.getKaasIO();
+				kaasIo.vooraadAanpassen(kaas, nieuweVooraad, con);
 			}
 		}
 		catch(SQLException e) {

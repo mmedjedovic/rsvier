@@ -12,9 +12,13 @@ import java.util.Map;
 import io.data.AdresIOImpl;
 import io.data.BestellingDetailsIOImpl;
 import io.data.BestellingTotaalIOImpl;
+import io.data.FactoryIOImpl;
 import io.data.KaasIOImpl;
 import io.data.KlantIOImpl;
+import io.interfaces.AdresIO;
 import io.interfaces.BestellingTotaalIO;
+import io.interfaces.FactoryIO;
+import io.interfaces.KlantIO;
 import model.*;
 import model.Bestelling.Status;
 import util.ExceptionIO;
@@ -24,45 +28,45 @@ import util.ExceptionIO;
 public class Applikaasie {
 	
 	
-	
+		FactoryIO factoryIo = FactoryIOImpl.gestInstance();
 		
 		
 		public void maakNieuweKlantenAdres(String voornaam, String achternaam, String straatNaam, 
 				String huisnummer, String toevoegingHuisnummer, String postcode, String woonplaats) throws ExceptionIO {
 			Klant klant = new Klant.KlantBuilder(voornaam, achternaam).build();
-			KlantIOImpl klantIo = KlantIOImpl.getInstance();
+			KlantIO klantIo = factoryIo.getKlantIO();
 			Integer klantId = klantIo.maakNieuweKlant(klant);
 			Adres adres = new Adres.AdresBuilder(klantId).straatNaam(straatNaam).huisnummer(huisnummer).
 					toevoegingHuisnummer(toevoegingHuisnummer).postcode(postcode).woonplaats(woonplaats).build();
-			AdresIOImpl adresIo = AdresIOImpl.getInstance();
+			AdresIO adresIo = factoryIo.getAdresIO();
 			adresIo.maakNieuweAdres(adres);
 		}
 		
 		public ArrayList<Klant> getKlantenLijst() throws ExceptionIO {
-			return KlantIOImpl.getInstance().getKlanten();
+			return factoryIo.getKlantIO().getKlanten();
 		}
 		
 		public void deleteKlant(Integer klantId) throws ExceptionIO {
-			KlantIOImpl.getInstance().deleteKlant(klantId);
+			factoryIo.getKlantIO().deleteKlant(klantId);
 		}
 		
 		public Adres getAdres(Integer klantId) throws ExceptionIO {
-			return AdresIOImpl.getInstance().getAdres(klantId);
+			return factoryIo.getAdresIO().getAdres(klantId);
 		}
 		
 		public void artikelMaken(String kaasNaam, Double prijsInKg, Double voorraadInKg) throws ExceptionIO {
 			BigDecimal prijsInKgBigDec = BigDecimal.valueOf(prijsInKg);
 			BigDecimal vooraadInKgBigdec = BigDecimal.valueOf(voorraadInKg);
 			Kaas kaas = new Kaas.KaasBuilder(kaasNaam).prijsInKg(prijsInKgBigDec).vooraadInKg(vooraadInKgBigdec).build();
-			KaasIOImpl.getInstance().nieuweKaasMaken(kaas);
+			factoryIo.getKaasIO().nieuweKaasMaken(kaas);
 		}
 		
 		public void deleteKaas(Integer kaasId) throws ExceptionIO {
-			KaasIOImpl.getInstance().deleteKaas(kaasId);
+			factoryIo.getKaasIO().deleteKaas(kaasId);
 		}
 		
 		public ArrayList<Kaas> getKaasLijst() throws ExceptionIO {
-			return KaasIOImpl.getInstance().getKazenLijst();
+			return factoryIo.getKaasIO().getKazenLijst();
 		}
 		
 		public void bestellingMaken(HashMap<Kaas, BigDecimal> besteldeKazenLijst, Integer klantId) throws ExceptionIO {
@@ -73,8 +77,8 @@ public class Applikaasie {
 			}
 			Bestelling bestelling = new Bestelling.BestellingBuilder(klantId).status(Status.OPEN).
 					besteldeKazenList(besteldeKazenLijst).bestellingDate(date).totaalPrijs(totaalPrijs).build();
-			BestellingTotaalIOImpl.getInstance().maakBestellingTotaal(bestelling);
-			BestellingDetailsIOImpl.getInstance().maakBestellingDetails(bestelling);
+			factoryIo.getBestllingTotaalIO().maakBestellingTotaal(bestelling);
+			factoryIo.getBestellingsDetailsIO().maakBestellingDetails(bestelling);
 		}
 	
 		

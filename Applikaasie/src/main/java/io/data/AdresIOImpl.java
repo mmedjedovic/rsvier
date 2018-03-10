@@ -12,15 +12,6 @@ public class AdresIOImpl implements AdresIO{
 	
 	private static AdresIOImpl instance = null;
 	
-	private AdresIOImpl() {}
-	
-	public static AdresIOImpl getInstance() {
-		if(instance == null) {
-			instance = new AdresIOImpl();
-		}
-		return instance;
-	}
-	
 	//een adres maken
 	@Override
 	public void maakNieuweAdres(Adres adres) throws ExceptionIO {

@@ -7,23 +7,14 @@ import java.util.Map;
 
 import io.interfaces.BestellingDetailsIO;
 import io.interfaces.BestellingTotaalIO;
+import io.interfaces.FactoryIO;
+import io.interfaces.KlantIO;
 import model.Bestelling;
 import model.Klant;
 import util.ExceptionIO;
 import model.Bestelling.Status;
 
 public class BestellingTotaalIOImpl implements BestellingTotaalIO{
-	
-	private static BestellingTotaalIOImpl instance = null;
-	
-	private BestellingTotaalIOImpl() {}
-	
-	public static BestellingTotaalIOImpl getInstance() {
-		if(instance == null) {
-			instance = new BestellingTotaalIOImpl();
-		}
-		return instance;
-	}
 	
 	//bestelling_totaal tabel wordt gemaakt
 	@Override
@@ -52,8 +43,6 @@ public class BestellingTotaalIOImpl implements BestellingTotaalIO{
 			ps.setInt(1, klantId);
 			ps.setString(2, status.name());
 			try(ResultSet rs = ps.executeQuery();) {
-				KlantIOImpl klantIO = KlantIOImpl.getInstance();
-				Klant klant = klantIO.getKlant(klantId);
 				return hulpGetBestellingen(rs, klantId);
 			}
 		}

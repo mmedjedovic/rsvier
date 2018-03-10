@@ -10,17 +10,6 @@ import util.ExceptionIO;
 
 public class KaasIOImpl implements KaasIO{
 	
-	private static KaasIOImpl instance = null;
-	
-	private KaasIOImpl() {}
-	
-	public static KaasIOImpl getInstance() {
-		if(instance == null) {
-			instance = new KaasIOImpl();
-		}
-		return instance;
-	}
-	
 	//nieuwe kaas in database opslaan
 	@Override
 	public void nieuweKaasMaken(Kaas kaas) throws ExceptionIO {
