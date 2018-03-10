@@ -18,21 +18,29 @@ public class BestellingTotaalIOImpl implements BestellingTotaalIO{
 	
 	//bestelling_totaal tabel wordt gemaakt
 	@Override
-	public void maakBestellingTotaal(Bestelling bestelling) throws ExceptionIO{
+	public Integer maakBestellingTotaal(Bestelling bestelling) throws ExceptionIO{
+		Integer index = -1;
 		String sql = "INSERT INTO bestelling_totaal(klant_id, totaal_prijs, bestelling_datum, status) VALUES(?, ?, ?, ?)";
-		try(Connection con = Connector.getInstance().getConnection(); PreparedStatement ps = con.prepareStatement(sql);) {
+		try(Connection con = Connector.getInstance().getConnection(); 
+				PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);) {
 			Date bestellingDatum = new Date(bestelling.getBestellingDate().getTime());
 			ps.setInt(1,  bestelling.getKlantId());
 			ps.setBigDecimal(2, bestelling.getTotaalPrijs());
 			ps.setDate(3, bestellingDatum);
 			ps.setString(4, bestelling.getStatus().name());
 			ps.executeUpdate();
-			ps.close();
+			try(ResultSet rs = ps.getGeneratedKeys()) {
+				if(rs.isBeforeFirst()) {
+					rs.next();
+					index = rs.getInt(1);
+				}
+			}
 		}
 		catch(SQLException e) {
 			e.printStackTrace();
 			throw new ExceptionIO("Niet gelukt nieuwe bestelling_totaal aan te maken");
 		}
+		return index;
 	}
 
 	//methode om overzicht van bestellingen te maken van specifiek klant, open of gesloten

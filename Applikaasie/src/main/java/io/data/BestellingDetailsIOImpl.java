@@ -22,7 +22,7 @@ public class BestellingDetailsIOImpl implements BestellingDetailsIO{
 	
 	//besteling in database opslaan in tabel van bestelling_details 
 	@Override
-	public void maakBestellingDetails(Bestelling bestelling) throws ExceptionIO {
+	public void maakBestellingDetails(Bestelling bestelling, Integer bestellingId) throws ExceptionIO {
 		String sql = "INSERT INTO bestelling_details(bestelling_id, kaas_id, hoeveelheid_in_kg, totaal_prijs) VALUES(?,?,?,?)";
 		try(Connection con = Connector.getInstance().getConnection(); PreparedStatement ps = con.prepareStatement(sql);) {
 			HashMap<Kaas, BigDecimal> kazenList = bestelling.getBesteldeKazenList();
@@ -30,7 +30,6 @@ public class BestellingDetailsIOImpl implements BestellingDetailsIO{
 				Kaas kaas = entry.getKey();
 				BigDecimal hoeveelheidInKg = entry.getValue();
 				BigDecimal totaalPrijs = hoeveelheidInKg.multiply(kaas.getPrijsInKg(), new MathContext(4));
-				Integer bestellingId = getLastId(con);
 				ps.setInt(1, bestellingId);
 				ps.setInt(2, kaas.getKaasId());
 				ps.setBigDecimal(3, hoeveelheidInKg);
@@ -47,15 +46,6 @@ public class BestellingDetailsIOImpl implements BestellingDetailsIO{
 		catch(SQLException e) {
 			e.printStackTrace();
 			throw new ExceptionIO("Niet gelukt om bestellingsdetails aan te maken in database");
-		}
-	}
-	
-	//hulp methode om laatste gecrieerde bestelling_id van bestelling_totaal te krijgen
-	private Integer getLastId(Connection con) throws SQLException {
-		try(Statement st = con.createStatement(); 
-			ResultSet rs = st.executeQuery ("SELECT last_insert_id() AS last_id FROM bestelling_totaal");) {
-			rs.next();
-			return rs.getInt("last_id");
 		}
 	}
 

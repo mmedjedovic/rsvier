@@ -73,12 +73,12 @@ public class Applikaasie {
 			BigDecimal totaalPrijs = new BigDecimal(0);
 			Date date = new Date();
 			for(Map.Entry<Kaas, BigDecimal> entry: besteldeKazenLijst.entrySet()) {
-				totaalPrijs = totaalPrijs.add(entry.getKey().getPrijsInKg().multiply(entry.getValue()));
+				totaalPrijs = entry.getKey().getPrijsInKg().multiply(entry.getValue());
 			}
 			Bestelling bestelling = new Bestelling.BestellingBuilder(klantId).status(Status.OPEN).
 					besteldeKazenList(besteldeKazenLijst).bestellingDate(date).totaalPrijs(totaalPrijs).build();
-			factoryIo.getBestllingTotaalIO().maakBestellingTotaal(bestelling);
-			factoryIo.getBestellingsDetailsIO().maakBestellingDetails(bestelling);
+			Integer bestellingId = factoryIo.getBestllingTotaalIO().maakBestellingTotaal(bestelling);
+			factoryIo.getBestellingsDetailsIO().maakBestellingDetails(bestelling, bestellingId);
 		}
 	
 		

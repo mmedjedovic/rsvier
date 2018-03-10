@@ -101,7 +101,7 @@ public class BestellingMaken {
 		//listener voor bestelling button
 		bestellenButton.setOnAction(e -> {
 			BigDecimal besteldeHoeveelheid = new BigDecimal(bestelHoeveelheidTextField.getText());
-			Kaas kaas = getKaas(gekozenKaasId, kaasLijst);
+			Kaas kaas = kaasLijst.get(gekozenKaasId - 1);
 			besteldeKazenLijst.put(kaas, besteldeHoeveelheid);
 			bestelHoeveelheidTextField.clear();
 			comboKaasNamen.getSelectionModel().selectFirst();
@@ -148,13 +148,4 @@ public class BestellingMaken {
 		return new Scene(pane, 600, 400);		
 	}
 	
-	private Kaas getKaas(Integer gekozenKaasId, ArrayList<Kaas> kaasLijst) {
-		Kaas result = null;
-		for(Kaas kaas: kaasLijst) {	
-			if(kaas.getKaasId() == gekozenKaasId) {
-				result = kaas;
-			}
-		}
-		return result;
-	}
 }

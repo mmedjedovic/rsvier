@@ -10,7 +10,7 @@ import util.ExceptionIO;
 
 public interface BestellingTotaalIO {
 	
-	public void maakBestellingTotaal(Bestelling bestelling) throws ExceptionIO;
+	public Integer maakBestellingTotaal(Bestelling bestelling) throws ExceptionIO;
 	
 	public ArrayList<Bestelling> getBestellingenPerKlant(Integer klantId, Status status) throws ExceptionIO;
 	

@@ -8,6 +8,6 @@ import util.ExceptionIO;
 
 public interface BestellingDetailsIO {
 	 
-	public void maakBestellingDetails(Bestelling bestelling) throws ExceptionIO;
+	public void maakBestellingDetails(Bestelling bestelling, Integer bestellingId) throws ExceptionIO;
 	
 }
