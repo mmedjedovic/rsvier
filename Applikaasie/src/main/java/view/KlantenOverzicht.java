@@ -14,6 +14,7 @@ import javafx.scene.*;
 import javafx.util.*;
 import javafx.collections.*;
 import javafx.stage.*;
+import javafx.beans.binding.*;
 
 
 
@@ -113,6 +114,7 @@ public class KlantenOverzicht {
 		});
 		klantListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 		
+		
 		//implementation invalidation listener
 		klantListView.getSelectionModel().selectedItemProperty().addListener(ov -> {
 			klantId = klantListView.getSelectionModel().getSelectedItem().getKlantId();
@@ -134,6 +136,11 @@ public class KlantenOverzicht {
 				e.printStackTrace();
 			}
 		});	
+		
+		//button maken nactive totdat een klant is geselcteerd
+		nieuweBestelling.disableProperty().bind(Bindings.isEmpty(klantListView.getSelectionModel().getSelectedItems()));
+		deleteButton.disableProperty().bind(Bindings.isEmpty(klantListView.getSelectionModel().getSelectedItems()));
+		
 		//stoppen klantenlijst in Vbox
 		klantenLijstVBox.getChildren().addAll(klantListView);	
 		

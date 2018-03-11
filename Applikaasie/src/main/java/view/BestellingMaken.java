@@ -8,11 +8,16 @@ import javafx.util.*;
 import logic.Applikaasie;
 import model.Kaas;
 import util.ExceptionIO;
-
 import java.util.*;
+
+import com.mysql.cj.core.conf.StringPropertyDefinition;
+
 import java.math.*;
+import javafx.beans.binding.Bindings;
 import javafx.collections.*;
 import javafx.stage.*;
+import javafx.beans.binding.*;
+import javafx.beans.property.*;
 
 
 
@@ -128,8 +133,8 @@ public class BestellingMaken {
 		afsluitingHbox.setSpacing(5);
 		//afsluiting button
 		Label afsluitingLabel = new Label("Klaar met bestellen: ");
-		Button afsluitingButton = new Button("afsluiten");
-		afsluitingButton.setOnAction(e -> {
+		Button bestellingOpslaanButton = new Button("afsluiten");
+		bestellingOpslaanButton.setOnAction(e -> {
 			try {
 				applikaasie.bestellingMaken(besteldeKazenLijst, klantId);
 				homeStage.setScene(homeScene);
@@ -138,7 +143,11 @@ public class BestellingMaken {
 				e1.printStackTrace();
 			}
 		});
-		afsluitingHbox.getChildren().addAll(afsluitingLabel, afsluitingButton);
+		afsluitingHbox.getChildren().addAll(afsluitingLabel, bestellingOpslaanButton);
+		
+		
+		//buttons inactive maken
+		bestellenButton.disableProperty().bind(Bindings.isEmpty(bestelHoeveelheidTextField.textProperty()));
 		
 		//alles bij elkaar
 		pane.setTop(hBoxButton);
