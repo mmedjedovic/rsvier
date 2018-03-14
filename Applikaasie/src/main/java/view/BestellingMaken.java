@@ -103,14 +103,7 @@ public class BestellingMaken {
 		Label bestelHoeveelheidLabel = new Label("hoeveelheid in kg te bestellen: ");
 		TextField bestelHoeveelheidTextField = new TextField();
 		Button bestellenButton = new Button("toevoegen");
-		//listener voor bestelling button
-		bestellenButton.setOnAction(e -> {
-			BigDecimal besteldeHoeveelheid = new BigDecimal(bestelHoeveelheidTextField.getText());
-			Kaas kaas = kaasLijst.get(gekozenKaasId - 1);
-			besteldeKazenLijst.put(kaas, besteldeHoeveelheid);
-			bestelHoeveelheidTextField.clear();
-			comboKaasNamen.getSelectionModel().selectFirst();
-		});
+		
 		//listener voor combo
 		comboKaasNamen.setOnAction(e -> {
 			gekozenKaasId = kaasNaamObesrvableLijst.indexOf(comboKaasNamen.getValue());
@@ -133,7 +126,17 @@ public class BestellingMaken {
 		afsluitingHbox.setSpacing(5);
 		//afsluiting button
 		Label afsluitingLabel = new Label("Klaar met bestellen: ");
-		Button bestellingOpslaanButton = new Button("afsluiten");
+		Button bestellingOpslaanButton = new Button("bestelling opslaan");
+		//listener voor bestelling button
+		bestellenButton.setOnAction(e -> {
+			BigDecimal besteldeHoeveelheid = new BigDecimal(bestelHoeveelheidTextField.getText());
+			Kaas kaas = kaasLijst.get(gekozenKaasId - 1);
+			besteldeKazenLijst.put(kaas, besteldeHoeveelheid);
+			bestelHoeveelheidTextField.clear();
+			comboKaasNamen.getSelectionModel().selectFirst();
+			bestellingOpslaanButton.setDisable(false);
+		});
+		//listener voor bestellingopslaan button
 		bestellingOpslaanButton.setOnAction(e -> {
 			try {
 				applikaasie.bestellingMaken(besteldeKazenLijst, klantId);
@@ -143,9 +146,21 @@ public class BestellingMaken {
 				e1.printStackTrace();
 			}
 		});
+		bestellingOpslaanButton.setDisable(true);
 		afsluitingHbox.getChildren().addAll(afsluitingLabel, bestellingOpslaanButton);
 		
-		
+		/**
+		ObservableMap<Kaas, BigDecimal> observableBesteldeKazenLijst = FXCollections.observableMap(besteldeKazenLijst);
+		observableBesteldeKazenLijst.addListener(new MapChangeListener() {
+			@Override
+			public void onChanged(MapChangeListener.Change change) {
+				if(besteldeKazenLijst.size() > 0) {
+					bestellingOpslaanButton.setDisable(false);
+				} else {
+					bestellingOpslaanButton.setDisable(true);
+				}
+			}
+		});*/
 		//buttons inactive maken
 		bestellenButton.disableProperty().bind(Bindings.isEmpty(bestelHoeveelheidTextField.textProperty()));
 		

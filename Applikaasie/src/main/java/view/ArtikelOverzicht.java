@@ -16,6 +16,7 @@ import javafx.stage.*;
 import javafx.util.Callback;
 import javafx.application.*;
 import javafx.util.*;
+import javafx.beans.binding.*;
 
 
 @SuppressWarnings("restriction")
@@ -78,6 +79,9 @@ public class ArtikelOverzicht {
 		kaasListView.getSelectionModel().selectedItemProperty().addListener(ov -> {
 			kaasId = kaasListView.getSelectionModel().getSelectedItem().getKaasId();
 		});
+		
+		//delete button inactive mken
+		deleteButton.disableProperty().bind(Bindings.isEmpty(kaasListView.getSelectionModel().getSelectedItems()));
 		
 		
 		VBox kaasListViewVbox = new VBox();
