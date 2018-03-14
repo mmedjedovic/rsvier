@@ -5,11 +5,19 @@ import logic.Applikaasie;
 import util.ExceptionIO;
 
 import javafx.scene.control.*;
+
+import java.util.ArrayList;
+
+import javax.swing.event.ChangeListener;
+
 import javafx.geometry.*;
 import javafx.scene.layout.*;
 import javafx.scene.*;
 import javafx.scene.text.*;
 import javafx.stage.*;
+import javafx.beans.value.*;
+import javafx.beans.property.*;
+import javafx.collections.*;
 
 @SuppressWarnings("restriction")
 public class KlantMaken {
@@ -17,31 +25,43 @@ public class KlantMaken {
 	
 	public GridPane makeGridPane(Stage stage, Scene homeScene, Applikaasie applikaasie) {
 		
+		ArrayList<TextField> listTextFields = new ArrayList<TextField>();
+		
 		//crieeren velden for grid pane
 		Button homeButton = getHomeButton(stage, homeScene);
 		Label titel = new Label("Invullen formulier");
 		Label voornaamLabel = new Label("voornaam:");
 		TextField voornaamTextfield = new TextField();
+		listTextFields.add(voornaamTextfield);
 		Label achterNaamLabel = new Label("achternaam:");
 		TextField achternaamTextField = new TextField();
+		listTextFields.add(achternaamTextField);
 		Label straatNaamLabel = new Label("straat naam:");
 		TextField straatNaamTextField = new TextField();
+		listTextFields.add(straatNaamTextField);
 		Label huisnummerLabel = new Label("huisnummer:");
 		TextField huisnummerTextField = new TextField();
+		listTextFields.add(huisnummerTextField);
 		Label toevoegingHuisnummerLabel = new Label("toevoegingsnummer:");
 		TextField toevoegingHuisnummerTextField = new TextField();
+		listTextFields.add(toevoegingHuisnummerTextField);
 		Label postcodeLabel = new Label("postcode:");
 		TextField postcodeTextField = new TextField();
+		listTextFields.add(postcodeTextField);
 		Label woonplaatsLabel = new Label("woonplaats:");
 		TextField woonplaatsTextField = new TextField();
+		listTextFields.add(woonplaatsTextField);
 		Button registratieButton = new Button("registreer");
 		
-		//event handler voor registratie buton
+		//ListView<TextField> listVieuwTextField = new ListView<>(FXCollections.observableArrayList(listTextFields));
+		
+		//event handler voor registratie button
 		registratieButton.setOnAction(e -> {
 			try {
 				applikaasie.maakNieuweKlantenAdres(voornaamTextfield.getText(), achternaamTextField.getText(), 
-												straatNaamTextField.getText(), huisnummerTextField.getText(), toevoegingHuisnummerTextField.getText(), 
-																																postcodeTextField.getText(), woonplaatsTextField.getText());
+													straatNaamTextField.getText(), huisnummerTextField.getText(), 
+														toevoegingHuisnummerTextField.getText(), 
+															postcodeTextField.getText(), woonplaatsTextField.getText());
 				voornaamTextfield.clear();
 				achternaamTextField.clear();
 				straatNaamTextField.clear();
@@ -55,6 +75,25 @@ public class KlantMaken {
 			}
 			
 		});
+		//registratie button active maken
+		BooleanProperty disableProperty = new SimpleBooleanProperty();
+		disableProperty.set(true);
+		registratieButton.disableProperty().bind(disableProperty);
+		//change listener
+		javafx.beans.value.ChangeListener<String> changeListener = (observable, oldValue, newValue) -> {
+			boolean disable = false;
+			for(TextField textField: listTextFields) {
+				if(textField.getText().isEmpty()) {
+					disable = true;
+					break;
+				}
+			}
+			disableProperty.set(disable);
+		};
+		//add listeners to text fields
+		addListenerToTextFieldList(listTextFields, changeListener);
+		
+		
 		
 		//opzetten grid pane
 		GridPane pane = new GridPane();
@@ -95,5 +134,10 @@ public class KlantMaken {
 		return homeButton;
 	}
 	
+	private void addListenerToTextFieldList(ArrayList<TextField> listTextFields, javafx.beans.value.ChangeListener<String> changeListener) {
+		for(TextField textField: listTextFields) {
+			textField.textProperty().addListener(changeListener);
+		}
+	}
 	
 }

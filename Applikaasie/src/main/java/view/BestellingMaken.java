@@ -134,6 +134,7 @@ public class BestellingMaken {
 			besteldeKazenLijst.put(kaas, besteldeHoeveelheid);
 			bestelHoeveelheidTextField.clear();
 			comboKaasNamen.getSelectionModel().selectFirst();
+			//bestellingopslaan button active maken
 			bestellingOpslaanButton.setDisable(false);
 		});
 		//listener voor bestellingopslaan button
@@ -149,19 +150,7 @@ public class BestellingMaken {
 		bestellingOpslaanButton.setDisable(true);
 		afsluitingHbox.getChildren().addAll(afsluitingLabel, bestellingOpslaanButton);
 		
-		/**
-		ObservableMap<Kaas, BigDecimal> observableBesteldeKazenLijst = FXCollections.observableMap(besteldeKazenLijst);
-		observableBesteldeKazenLijst.addListener(new MapChangeListener() {
-			@Override
-			public void onChanged(MapChangeListener.Change change) {
-				if(besteldeKazenLijst.size() > 0) {
-					bestellingOpslaanButton.setDisable(false);
-				} else {
-					bestellingOpslaanButton.setDisable(true);
-				}
-			}
-		});*/
-		//buttons inactive maken
+		//bestellbutton inactive maken
 		bestellenButton.disableProperty().bind(Bindings.isEmpty(bestelHoeveelheidTextField.textProperty()));
 		
 		//alles bij elkaar
