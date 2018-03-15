@@ -140,7 +140,14 @@ public class Home extends Application{
 	private Button getButtonOverzichtBesteling() {
 		Button buttonOverzichtBestelling = new Button("overzicht maken");
 		buttonOverzichtBestelling.setOnAction(e -> {
-			System.out.println("overzichtbestelling gedrukt");
+			try {
+				BestellingOverzicht bestellingOverzicht = new BestellingOverzicht(stage, homeScene, applikaasie);
+				Scene scene = bestellingOverzicht.getBestellingOverzichtScene();
+				stage.setScene(scene);
+			} catch (ExceptionIO e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}	
 		});
 		return buttonOverzichtBestelling;
 	}

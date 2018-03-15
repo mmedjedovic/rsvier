@@ -7,6 +7,7 @@ import javafx.scene.*;
 import javafx.util.*;
 import logic.Applikaasie;
 import model.Kaas;
+import model.Klant;
 import util.ExceptionIO;
 import java.util.*;
 
@@ -28,7 +29,7 @@ public class BestellingMaken {
 	private Scene homeScene;
 	private Scene klantOverzichtScene;
 	private Applikaasie applikaasie;
-	private Integer klantId;
+	private Klant klant;
 	private Integer gekozenKaasId;
 	private ArrayList<Kaas> kaasLijst;
 	private ArrayList<Integer> kaasIdLijst;
@@ -37,8 +38,8 @@ public class BestellingMaken {
 	private ArrayList<Double> kaasVooraadLijst;
 	private HashMap<Kaas, BigDecimal> besteldeKazenLijst;
 	
-	public BestellingMaken(Integer klantId, Applikaasie applikaasie, Stage homeStage, Scene homeScene, Scene klantOverzichtScene) {
-		this.klantId = klantId;
+	public BestellingMaken(Klant klant, Applikaasie applikaasie, Stage homeStage, Scene homeScene, Scene klantOverzichtScene) {
+		this.klant = klant;
 		this.applikaasie = applikaasie;
 		this.homeStage = homeStage;
 		this.homeScene = homeScene;
@@ -70,6 +71,7 @@ public class BestellingMaken {
 		cancelButton.setOnAction(e -> {
 			homeStage.setScene(klantOverzichtScene);
 		});
+		
 		//hbox voor buttons
 		HBox hBoxButton = new HBox();
 		hBoxButton.getChildren().addAll(homeButton, cancelButton);
@@ -91,6 +93,7 @@ public class BestellingMaken {
 		gridPaneVoorCombo.setPadding(new Insets(15, 15, 15, 15));
 		gridPaneVoorCombo.setVgap(5);
 		gridPaneVoorCombo.setHgap(5);
+		Label klantNaamLabel = new Label("Nieuwe bestelling voor: " + klant.getVoornaam() + " " + klant.getAchternaam());
 		Label comboLabel = new Label("kies artikel: ");
 		ObservableList<String> kaasNaamObesrvableLijst = FXCollections.observableArrayList(kaasNaamLijst);
 		ComboBox<String> comboKaasNamen = new ComboBox<>();
@@ -110,15 +113,16 @@ public class BestellingMaken {
 			prijsKaasTextField.setText(String.valueOf(kaasPrijsLijst.get(gekozenKaasId)));
 			voorraadKaasTextField.setText(String.valueOf(kaasVooraadLijst.get(gekozenKaasId)));
 		});
-		gridPaneVoorCombo.add(comboLabel, 0, 0);
-		gridPaneVoorCombo.add(comboKaasNamen, 1, 0);
-		gridPaneVoorCombo.add(prijsKaasLabel, 0, 1);
-		gridPaneVoorCombo.add(prijsKaasTextField, 1, 1);
-		gridPaneVoorCombo.add(voorraadKaasLabel, 0, 2);
-		gridPaneVoorCombo.add(voorraadKaasTextField, 1, 2);
-		gridPaneVoorCombo.add(bestelHoeveelheidLabel, 0, 3);
-		gridPaneVoorCombo.add(bestelHoeveelheidTextField, 1, 3);
-		gridPaneVoorCombo.add(bestellenButton, 2, 3);
+		gridPaneVoorCombo.add(klantNaamLabel, 0, 0);
+		gridPaneVoorCombo.add(comboLabel, 0, 1);
+		gridPaneVoorCombo.add(comboKaasNamen, 1, 1);
+		gridPaneVoorCombo.add(prijsKaasLabel, 0, 2);
+		gridPaneVoorCombo.add(prijsKaasTextField, 1, 2);
+		gridPaneVoorCombo.add(voorraadKaasLabel, 0, 3);
+		gridPaneVoorCombo.add(voorraadKaasTextField, 1, 3);
+		gridPaneVoorCombo.add(bestelHoeveelheidLabel, 0, 4);
+		gridPaneVoorCombo.add(bestelHoeveelheidTextField, 1, 4);
+		gridPaneVoorCombo.add(bestellenButton, 2, 4);
 		
 		//bestellings afsluiting deel
 		HBox afsluitingHbox = new HBox();
@@ -140,7 +144,7 @@ public class BestellingMaken {
 		//listener voor bestellingopslaan button
 		bestellingOpslaanButton.setOnAction(e -> {
 			try {
-				applikaasie.bestellingMaken(besteldeKazenLijst, klantId);
+				applikaasie.bestellingMaken(besteldeKazenLijst, klant);
 				homeStage.setScene(homeScene);
 			} catch (ExceptionIO e1) {
 				// TODO Auto-generated catch block

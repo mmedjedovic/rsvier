@@ -69,13 +69,13 @@ public class Applikaasie {
 			return factoryIo.getKaasIO().getKazenLijst();
 		}
 		
-		public void bestellingMaken(HashMap<Kaas, BigDecimal> besteldeKazenLijst, Integer klantId) throws ExceptionIO {
+		public void bestellingMaken(HashMap<Kaas, BigDecimal> besteldeKazenLijst, Klant klant) throws ExceptionIO {
 			BigDecimal totaalPrijs = new BigDecimal(0);
 			Date date = new Date();
 			for(Map.Entry<Kaas, BigDecimal> entry: besteldeKazenLijst.entrySet()) {
 				totaalPrijs = entry.getKey().getPrijsInKg().multiply(entry.getValue());
 			}
-			Bestelling bestelling = new Bestelling.BestellingBuilder(klantId).status(Status.OPEN).
+			Bestelling bestelling = new Bestelling.BestellingBuilder(klant.getKlantId()).status(Status.OPEN).
 					besteldeKazenList(besteldeKazenLijst).bestellingDate(date).totaalPrijs(totaalPrijs).build();
 			Integer bestellingId = factoryIo.getBestllingTotaalIO().maakBestellingTotaal(bestelling);
 			factoryIo.getBestellingsDetailsIO().maakBestellingDetails(bestelling, bestellingId);

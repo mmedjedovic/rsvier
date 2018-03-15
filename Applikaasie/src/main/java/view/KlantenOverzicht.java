@@ -72,7 +72,8 @@ public class KlantenOverzicht {
 		Button nieuweBestelling = new Button("nieuwe bestelling");
 		nieuweBestelling.setOnAction(e -> {
 			try {
-				BestellingMaken bestellingMaken = new BestellingMaken(klantId, applikaasie, homeStage, homeScene, this.getBorderPaneScene());
+				Klant klant = getSelectedKlant(klantLijst, klantId);
+				BestellingMaken bestellingMaken = new BestellingMaken(klant, applikaasie, homeStage, homeScene, this.getBorderPaneScene());
 				Scene bestellingMakenScene = bestellingMaken.getGridPaneScene();
 				homeStage.setScene(bestellingMakenScene);
 			} catch (ExceptionIO e1) {
@@ -145,5 +146,14 @@ public class KlantenOverzicht {
 		klantenLijstVBox.getChildren().addAll(klantListView);	
 		
 		return new Scene(borderPane, 800, 400);	
+	}
+	
+	private Klant getSelectedKlant(ArrayList<Klant> klantLijst, Integer klantId) {
+		for(Klant klant: klantLijst) {
+			if(klant.getKlantId() == klantId) {
+				return klant;
+			}
+		}
+		return null;
 	}
 }
