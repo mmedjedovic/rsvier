@@ -13,14 +13,13 @@ import javafx.beans.binding.*;
 
 import java.util.ArrayList;
 
-import javax.swing.plaf.basic.BasicTreeUI.SelectionModelPropertyChangeHandler;
-
 import logic.Applikaasie;
+import model.Bestelling;
 import model.Klant;
 import util.ExceptionIO;
 
 @SuppressWarnings("restriction")
-public class BestellingOverzicht {
+public class BestellingOverzichtMaken {
 	
 	
 	Stage homeStage;
@@ -28,14 +27,14 @@ public class BestellingOverzicht {
 	Applikaasie applikaasie;
 	ArrayList<Klant> klantLijst;
 	
-	public BestellingOverzicht(Stage homeStage, Scene homeScene, Applikaasie applikaasie) throws ExceptionIO {
+	public BestellingOverzichtMaken(Stage homeStage, Scene homeScene, Applikaasie applikaasie) throws ExceptionIO {
 		this.homeStage = homeStage;
 		this.homeScene = homeScene;
 		this.applikaasie =applikaasie;
 		klantLijst = applikaasie.getKlantenLijst();
 	}
 	
-	public Scene getBestellingOverzichtScene() throws ExceptionIO {
+	public Scene getBestellingOverzichtMakenScene() throws ExceptionIO {
 		
 		//maken border pane
 		BorderPane borderPane = new BorderPane();
@@ -97,13 +96,24 @@ public class BestellingOverzicht {
 		
 		//Combobox van status maken
 		ComboBox<String> statusCombo = new ComboBox<String>();
-		statusCombo.getItems().addAll("open", "gesloten");
+		statusCombo.getItems().addAll("open", "gesloten", "alles");
 		
 		//labels maken en button voor overzicht maken
 		Label newInstructieLabel = new Label("Maak keuzes van onderstaande categories:");
 		Label klantNaamLabel = new Label("Kies klant: ");
 		Label statusBestellingLabel = new Label("Kies status van bestellingen: ");
 		Button overzichtButton = new Button("overzicht maken");
+		overzichtButton.setOnAction(e -> {
+			try {
+				ArrayList<Bestelling> bestellinglijst = applikaasie.getBestellingen(comboBoxKlant.getSelectionModel().getSelectedItem(), 
+																						statusCombo.getSelectionModel().getSelectedItem());
+				BestellingOverizicht bestellingOverzicht = new BestellingOverizicht(homeStage, homeScene, this.getBestellingOverzichtMakenScene(), applikaasie, bestellinglijst);
+				homeStage.setScene(bestellingOverzicht.getBestellingOverzicht());
+			} catch (ExceptionIO e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		});
 		
 		//nodes toevoegen aan gridPane
 		gridPane.add(newInstructieLabel, 0, 0);

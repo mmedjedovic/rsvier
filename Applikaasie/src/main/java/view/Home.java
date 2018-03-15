@@ -141,8 +141,8 @@ public class Home extends Application{
 		Button buttonOverzichtBestelling = new Button("overzicht maken");
 		buttonOverzichtBestelling.setOnAction(e -> {
 			try {
-				BestellingOverzicht bestellingOverzicht = new BestellingOverzicht(stage, homeScene, applikaasie);
-				Scene scene = bestellingOverzicht.getBestellingOverzichtScene();
+				BestellingOverzichtMaken bestellingOverzichtMaken = new BestellingOverzichtMaken(stage, homeScene, applikaasie);
+				Scene scene = bestellingOverzichtMaken.getBestellingOverzichtMakenScene();
 				stage.setScene(scene);
 			} catch (ExceptionIO e1) {
 				// TODO Auto-generated catch block

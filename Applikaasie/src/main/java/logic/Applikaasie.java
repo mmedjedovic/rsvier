@@ -80,6 +80,19 @@ public class Applikaasie {
 			Integer bestellingId = factoryIo.getBestllingTotaalIO().maakBestellingTotaal(bestelling);
 			factoryIo.getBestellingsDetailsIO().maakBestellingDetails(bestelling, bestellingId);
 		}
+		
+		public ArrayList<Bestelling> getBestellingen(Klant klant, String status) throws ExceptionIO {
+			ArrayList<Bestelling> bestellingLijst = new ArrayList<Bestelling>();
+			BestellingTotaalIO bestellingTotaalIO = factoryIo.getBestllingTotaalIO();
+			if(status.equals(Status.OPEN.name())) {
+				bestellingLijst = bestellingTotaalIO.getBestellingenPerKlant(klant, Status.OPEN);
+			} if (status.equals(Status.GESLOTEN.name())) {
+				bestellingLijst = bestellingTotaalIO.getBestellingenPerKlant(klant, Status.GESLOTEN);
+			} else {
+				bestellingLijst = bestellingTotaalIO.getAlleBestellingenPerKlant(klant);
+			}
+			return bestellingLijst;
+		}
 	
 		
 		

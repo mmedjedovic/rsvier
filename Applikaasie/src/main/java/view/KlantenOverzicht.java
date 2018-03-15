@@ -18,6 +18,7 @@ import javafx.beans.binding.*;
 
 
 
+
 @SuppressWarnings("restriction")
 public class KlantenOverzicht {
 	

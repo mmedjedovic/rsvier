@@ -45,13 +45,28 @@ public class BestellingTotaalIOImpl implements BestellingTotaalIO{
 
 	//methode om overzicht van bestellingen te maken van specifiek klant, open of gesloten
 	@Override
-	public ArrayList<Bestelling> getBestellingenPerKlant(Integer klantId, Status status) throws ExceptionIO {
+	public ArrayList<Bestelling> getBestellingenPerKlant(Klant klant, Status status) throws ExceptionIO {
 		String sql = "SELECT * FROM bestelling_totaal WHERE  klant_id = ? AND status = ?";
 		try(Connection con = Connector.getInstance().getConnection(); PreparedStatement ps = con.prepareStatement(sql);) {
-			ps.setInt(1, klantId);
+			ps.setInt(1, klant.getKlantId());
 			ps.setString(2, status.name());
 			try(ResultSet rs = ps.executeQuery();) {
-				return hulpGetBestellingen(rs, klantId);
+				return hulpGetBestellingen(rs, klant.getKlantId());
+			}
+		}
+		catch(SQLException e) {
+			e.printStackTrace();
+			throw new ExceptionIO("Niet gelukt overzicht van bestellingan van gegeven klant aan te maken");
+		}
+	}
+	@Override
+	//methode om overzicht van alle bestellingen van een specifiek klant opvragen
+	public ArrayList<Bestelling> getAlleBestellingenPerKlant(Klant klant) throws ExceptionIO {
+		String sql = "SELECT * FROM bestelling_totaal WHERE klant_id = ?";
+		try(Connection con = Connector.getInstance().getConnection(); PreparedStatement ps = con.prepareStatement(sql);) {
+			ps.setInt(1, klant.getKlantId());
+			try(ResultSet rs = ps.executeQuery();) {
+				return hulpGetBestellingen(rs, klant.getKlantId());
 			}
 		}
 		catch(SQLException e) {
