@@ -61,6 +61,10 @@ public class Applikaasie {
 			factoryIo.getKaasIO().nieuweKaasMaken(kaas);
 		}
 		
+		public Kaas getKaas(int kaasId) throws ExceptionIO {
+			return factoryIo.getKaasIO().getKaas(kaasId);
+		}
+		
 		public void deleteKaas(Integer kaasId) throws ExceptionIO {
 			factoryIo.getKaasIO().deleteKaas(kaasId);
 		}
@@ -84,14 +88,18 @@ public class Applikaasie {
 		public ArrayList<Bestelling> getBestellingen(Klant klant, String status) throws ExceptionIO {
 			ArrayList<Bestelling> bestellingLijst = new ArrayList<Bestelling>();
 			BestellingTotaalIO bestellingTotaalIO = factoryIo.getBestllingTotaalIO();
-			if(status.equals(Status.OPEN.name())) {
+			if(status.equals("open")) {
 				bestellingLijst = bestellingTotaalIO.getBestellingenPerKlant(klant, Status.OPEN);
-			} if (status.equals(Status.GESLOTEN.name())) {
+			} if (status.equals("gesloten")) {
 				bestellingLijst = bestellingTotaalIO.getBestellingenPerKlant(klant, Status.GESLOTEN);
 			} else {
 				bestellingLijst = bestellingTotaalIO.getAlleBestellingenPerKlant(klant);
 			}
 			return bestellingLijst;
+		}
+		
+		public ArrayList<ArrayList<String>> getBestellingDetails(Bestelling bestelling) throws ExceptionIO {
+			return factoryIo.getBestellingsDetailsIO().getBestellingsDetails(bestelling);
 		}
 	
 		

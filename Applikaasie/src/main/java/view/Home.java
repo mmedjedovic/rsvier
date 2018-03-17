@@ -132,7 +132,15 @@ public class Home extends Application{
 	private Button getButtonNewBestelling() {
 		Button buttonNewBestelling = new Button("nieuwe maken");
 		buttonNewBestelling.setOnAction(e -> {
-			System.out.println("newbestelling gedrukt");
+			KlantenOverzicht klantenOverzicht = new KlantenOverzicht(stage, homeScene, applikaasie);
+			Scene scene;
+			try {
+				scene = klantenOverzicht.getBorderPaneScene();
+				stage.setScene(scene);
+			}catch (ExceptionIO e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		});
 		return buttonNewBestelling;
 	}

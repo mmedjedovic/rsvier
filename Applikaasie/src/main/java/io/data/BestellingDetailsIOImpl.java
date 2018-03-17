@@ -7,8 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 import io.interfaces.BestellingDetailsIO;
 import io.interfaces.FactoryIO;
@@ -47,6 +46,33 @@ public class BestellingDetailsIOImpl implements BestellingDetailsIO{
 			e.printStackTrace();
 			throw new ExceptionIO("Niet gelukt om bestellingsdetails aan te maken in database");
 		}
+	}
+	
+	@Override
+	public ArrayList<ArrayList<String>> getBestellingsDetails(Bestelling bestelling) throws ExceptionIO {
+		ArrayList<ArrayList<String>> bestellingDetailsList = new ArrayList<>();
+		String sql = "SELECT * FROM bestelling_details WHERE bestelling_id = ?";
+		try(Connection con = Connector.getInstance().getConnection(); PreparedStatement ps = con.prepareStatement(sql);) {
+			ps.setInt(1, bestelling.getBestellingId());
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()) {
+				bestellingDetailsList.add(getDetails(rs, con));
+			}
+		}
+		catch (SQLException e){
+			e.printStackTrace();
+			throw new ExceptionIO("Niet gelukt bestellingdetails uit database te halen");
+		}
+		return bestellingDetailsList;
+	}
+	
+	private ArrayList<String> getDetails(ResultSet rs, Connection con) throws SQLException {
+		ArrayList<String> detailsList = new ArrayList<>();
+		String kaasId = Integer.toString(rs.getInt("kaas_id"));
+		detailsList.add(kaasId);
+		detailsList.add(rs.getString("hoeveelheid_in_kg"));
+		detailsList.add(rs.getString("totaal_prijs"));
+		return detailsList;
 	}
 
 		
