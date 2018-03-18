@@ -19,6 +19,7 @@ import logic.Applikaasie;
 import model.Bestelling;
 import model.Kaas;
 import model.Klant;
+import model.Bestelling.Status;
 import util.ExceptionIO;
 
 @SuppressWarnings("restriction")
@@ -53,12 +54,29 @@ public class BestellingOverizicht {
 		cancelButton.setOnAction(e -> {
 			homeStage.setScene(bestellingOverzichtMakenScene);
 		});
+		//change status van bestelling
+		Button changeStatusButton = new Button("change status");
+		changeStatusButton.setOnAction(e -> {
+			try {
+				if(selectedBestelling.getStatus().equals(Status.OPEN)) {
+					applikaasie.changeStausBestelling(selectedBestelling, Status.GESLOTEN);
+				} else {
+					applikaasie.changeStausBestelling(selectedBestelling, Status.OPEN);
+				}
+				homeStage.setScene(bestellingOverzichtMakenScene);
+			} catch (ExceptionIO e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+				
+		});
 		
 		//hbox voor buttons
 		HBox hBoxButton = new HBox();
-		hBoxButton.getChildren().addAll(homeButton, cancelButton);
+		hBoxButton.getChildren().addAll(homeButton, cancelButton, changeStatusButton);
 		hBoxButton.setPadding(new Insets(15, 15, 15, 15));
 		hBoxButton.setSpacing(5);
+		
 		
 		//list van bestellingen maken
 		ListView<Bestelling> bestellingListView = new ListView<Bestelling>(FXCollections.observableArrayList(bestellingLijst));
@@ -101,7 +119,7 @@ public class BestellingOverizicht {
 		});
 		
 		//vbox voor bestellinglijst
-		bestellingListView.setPrefWidth(600);
+		bestellingListView.setPrefWidth(800);
 		VBox vBoxBestellingLijst = new VBox();
 		vBoxBestellingLijst.setPrefWidth(600);
 		ScrollPane scrollPaneBestellingLijst = new ScrollPane(bestellingListView);

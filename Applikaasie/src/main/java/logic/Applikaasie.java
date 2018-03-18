@@ -90,7 +90,7 @@ public class Applikaasie {
 			BestellingTotaalIO bestellingTotaalIO = factoryIo.getBestllingTotaalIO();
 			if(status.equals("open")) {
 				bestellingLijst = bestellingTotaalIO.getBestellingenPerKlant(klant, Status.OPEN);
-			} if (status.equals("gesloten")) {
+			} else if (status.equals("gesloten")) {
 				bestellingLijst = bestellingTotaalIO.getBestellingenPerKlant(klant, Status.GESLOTEN);
 			} else {
 				bestellingLijst = bestellingTotaalIO.getAlleBestellingenPerKlant(klant);
@@ -100,6 +100,10 @@ public class Applikaasie {
 		
 		public ArrayList<ArrayList<String>> getBestellingDetails(Bestelling bestelling) throws ExceptionIO {
 			return factoryIo.getBestellingsDetailsIO().getBestellingsDetails(bestelling);
+		}
+		
+		public void changeStausBestelling(Bestelling bestelling, Status status) throws ExceptionIO {
+			factoryIo.getBestllingTotaalIO().changeStatusBestelling(bestelling, status);
 		}
 	
 		

@@ -80,7 +80,7 @@ public class BestellingTotaalIOImpl implements BestellingTotaalIO{
 	public void changeStatusBestelling(Bestelling bestelling, Status status) throws ExceptionIO {
 		String sql = "UPDATE bestelling_totaal SET status = ? WHERE bestelling_id = ?";
 		try(Connection con = Connector.getInstance().getConnection(); PreparedStatement ps = con.prepareStatement(sql);) {
-			ps.setString(1, Status.GESLOTEN.name());
+			ps.setString(1, status.name());
 			ps.setInt(2, bestelling.getBestellingId());
 			ps.executeUpdate();
 		}
@@ -96,7 +96,7 @@ public class BestellingTotaalIOImpl implements BestellingTotaalIO{
 		ArrayList<Bestelling> bestellingLijst = new ArrayList<Bestelling>();
 		while(rs.next()) {
 			java.util.Date date = new Date(rs.getDate("bestelling_datum").getTime());
-			Status status = Status.valueOf("OPEN");
+			Status status = Status.valueOf(rs.getString("status"));
 			Bestelling bestelling = new Bestelling.BestellingBuilder(klantId).
 					totaalPrijs(rs.getBigDecimal("totaal_prijs")).bestellingDate(date).bestellingId(rs.getInt("bestelling_id")).status(status).build();
 			bestellingLijst.add(bestelling);
