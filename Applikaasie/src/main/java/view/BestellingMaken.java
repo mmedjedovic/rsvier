@@ -1,6 +1,8 @@
 package view;
 
 import javafx.scene.control.*;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.paint.*;
 import javafx.geometry.*;
 import javafx.scene.layout.*;
 import javafx.scene.*;
@@ -134,12 +136,21 @@ public class BestellingMaken {
 		//listener voor bestelling button
 		bestellenButton.setOnAction(e -> {
 			BigDecimal besteldeHoeveelheid = new BigDecimal(bestelHoeveelheidTextField.getText());
-			Kaas kaas = kaasLijst.get(gekozenKaasId - 1);
-			besteldeKazenLijst.put(kaas, besteldeHoeveelheid);
-			bestelHoeveelheidTextField.clear();
-			comboKaasNamen.getSelectionModel().selectFirst();
-			//bestellingopslaan button active maken
-			bestellingOpslaanButton.setDisable(false);
+			BigDecimal vooraadHoeveelhied =  new BigDecimal(this.kaasVooraadLijst.get(gekozenKaasId));
+			if (vooraadHoeveelhied.compareTo(besteldeHoeveelheid) < 0) {
+				Alert alert = new Alert(AlertType.WARNING);
+				alert.setTitle("Waarschuwing");
+				alert.setHeaderText("Bestellinghoeveelheid te groot!");
+				alert.setContentText("Kies een bestelhoeveelheid die kleiner is dan vooraadhoeveelheid");
+				alert.showAndWait();
+			}else {
+				Kaas kaas = kaasLijst.get(gekozenKaasId - 1);
+				besteldeKazenLijst.put(kaas, besteldeHoeveelheid);
+				bestelHoeveelheidTextField.clear();
+				comboKaasNamen.getSelectionModel().selectFirst();
+				//bestellingopslaan button active maken
+				bestellingOpslaanButton.setDisable(false);
+			}
 		});
 		//listener voor bestellingopslaan button
 		bestellingOpslaanButton.setOnAction(e -> {
@@ -153,6 +164,7 @@ public class BestellingMaken {
 		});
 		bestellingOpslaanButton.setDisable(true);
 		afsluitingHbox.getChildren().addAll(afsluitingLabel, bestellingOpslaanButton);
+		afsluitingHbox.setPadding(new Insets(10, 10, 10, 10));
 		
 		//bestellbutton inactive maken
 		bestellenButton.disableProperty().bind(Bindings.isEmpty(bestelHoeveelheidTextField.textProperty()));

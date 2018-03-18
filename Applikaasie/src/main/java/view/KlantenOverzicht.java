@@ -63,7 +63,7 @@ public class KlantenOverzicht {
 		deleteButton.setOnAction(e -> {
 			try {
 				applikaasie.deleteKlant(klantId);
-				this.homeStage.setScene(homeScene);
+				this.homeStage.setScene(this.getBorderPaneScene());
 			} catch (ExceptionIO e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();

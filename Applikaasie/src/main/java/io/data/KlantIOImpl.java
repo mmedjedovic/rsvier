@@ -65,7 +65,7 @@ public class KlantIOImpl implements KlantIO{
 	
 	@Override
 	public void deleteKlant(Integer klantId) throws ExceptionIO {
-		String sql = "DELETE from klant WHERE klant_id =?";
+		String sql = "DELETE FROM klant WHERE klant_id =?";
 		try(Connection con = Connector.getInstance().getConnection(); PreparedStatement ps = con.prepareStatement(sql);) {
 			ps.setInt(1, klantId);
 			ps.executeUpdate();
