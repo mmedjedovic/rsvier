@@ -8,12 +8,12 @@ import util.ExceptionIO;
 
 public interface KlantIO {
 	
-	public Integer maakNieuweKlant(Klant klant, Adres adres) throws ExceptionIO;
+	public Integer maakNieuweKlant(Klant klant, Adres adres) throws Exception;
 	
-	public Klant getKlant(Integer klantId) throws ExceptionIO;
+	public Klant getKlant(Integer klantId) throws Exception;
 	
-	public ArrayList<Klant> getKlanten() throws ExceptionIO;
+	public ArrayList<Klant> getKlanten() throws Exception;
 	
-	public void deleteKlant(Integer klantId) throws ExceptionIO;
+	public void deleteKlant(Integer klantId) throws Exception;
 
 }

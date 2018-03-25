@@ -2,14 +2,14 @@ package io.interfaces;
 
 public interface FactoryIO {
 	
-	public AdresIO getAdresIO();
+	public AdresIO getAdresIO() throws Exception;
 	
-	public BestellingDetailsIO getBestellingsDetailsIO();
+	public BestellingDetailsIO getBestellingsDetailsIO() throws Exception;
 	
-	public BestellingTotaalIO getBestllingTotaalIO();
+	public BestellingTotaalIO getBestllingTotaalIO() throws Exception;
 	
-	public KaasIO getKaasIO();
+	public KaasIO getKaasIO() throws Exception;
 	
-	public KlantIO getKlantIO();
+	public KlantIO getKlantIO() throws Exception;
 	
 }

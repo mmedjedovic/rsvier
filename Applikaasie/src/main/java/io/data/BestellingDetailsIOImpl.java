@@ -21,7 +21,7 @@ public class BestellingDetailsIOImpl implements BestellingDetailsIO{
 	
 	//besteling in database opslaan in tabel van bestelling_details 
 	@Override
-	public void maakBestellingDetails(Bestelling bestelling, Integer bestellingId) throws ExceptionIO {
+	public void maakBestellingDetails(Bestelling bestelling, Integer bestellingId) throws Exception {
 		String sql = "INSERT INTO bestelling_details(bestelling_id, kaas_id, hoeveelheid_in_kg, totaal_prijs) VALUES(?,?,?,?)";
 		try(Connection con = Connector.getInstance().getConnection(); PreparedStatement ps = con.prepareStatement(sql);) {
 			HashMap<Kaas, BigDecimal> kazenList = bestelling.getBesteldeKazenList();

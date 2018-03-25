@@ -64,7 +64,7 @@ public class KlantenOverzicht {
 			try {
 				applikaasie.deleteKlant(klantId);
 				this.homeStage.setScene(this.getBorderPaneScene());
-			} catch (ExceptionIO e1) {
+			} catch (Exception e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}	 
@@ -97,7 +97,12 @@ public class KlantenOverzicht {
 		
 		
 		//Lijst van klanten converteren naar List View
-		klantLijst = applikaasie.getKlantenLijst();
+		try {
+			klantLijst = applikaasie.getKlantenLijst();
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		klantListView = new ListView<Klant>(FXCollections.observableArrayList(klantLijst));
 		klantListView.setCellFactory(new Callback<ListView<Klant>, ListCell<Klant>>() {
 			@Override
@@ -133,7 +138,7 @@ public class KlantenOverzicht {
 				adresGridPane.add(new Label(adres.getPostcode()), 1, 3);
 				adresGridPane.add(new Label("Huisnummer:"), 0, 4);
 				adresGridPane.add(new Label(adres.getWoonplaats()), 1, 4);
-			} catch (ExceptionIO e) {
+			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}

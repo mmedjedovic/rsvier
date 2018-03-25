@@ -152,7 +152,7 @@ public class Home extends Application{
 				BestellingOverzichtMaken bestellingOverzichtMaken = new BestellingOverzichtMaken(stage, homeScene, applikaasie);
 				Scene scene = bestellingOverzichtMaken.getBestellingOverzichtMakenScene();
 				stage.setScene(scene);
-			} catch (ExceptionIO e1) {
+			} catch (Exception e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}	

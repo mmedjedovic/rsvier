@@ -69,7 +69,7 @@ public class KlantMaken {
 				toevoegingHuisnummerTextField.clear();
 				postcodeTextField.clear();
 				woonplaatsTextField.clear();
-			} catch (ExceptionIO e1) {
+			} catch (Exception e1) {
 				
 				e1.printStackTrace();
 			}

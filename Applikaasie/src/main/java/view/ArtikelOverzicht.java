@@ -48,14 +48,19 @@ public class ArtikelOverzicht {
 			try {
 				applikaasie.deleteKaas(kaasId);
 				this.stage.setScene(homeScene);
-			} catch (ExceptionIO e1) {
+			} catch (Exception e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 			
 		});
 		
-		kaasLijst = applikaasie.getKaasLijst();
+		try {
+			kaasLijst = applikaasie.getKaasLijst();
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		kaasListView = new ListView<Kaas>(FXCollections.observableList(kaasLijst));
 		kaasListView.setCellFactory(new Callback<ListView<Kaas>, ListCell<Kaas>>() {
 			

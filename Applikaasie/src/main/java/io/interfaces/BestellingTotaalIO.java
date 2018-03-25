@@ -11,12 +11,12 @@ import util.ExceptionIO;
 
 public interface BestellingTotaalIO {
 	
-	public Integer maakBestellingTotaal(Bestelling bestelling) throws ExceptionIO;
+	public Integer maakBestellingTotaal(Bestelling bestelling) throws Exception;
 	
-	public ArrayList<Bestelling> getBestellingenPerKlant(Klant klant, Status status) throws ExceptionIO;
+	public ArrayList<Bestelling> getBestellingenPerKlant(Klant klant, Status status) throws Exception;
 	
-	public ArrayList<Bestelling> getAlleBestellingenPerKlant(Klant klant) throws ExceptionIO;
+	public ArrayList<Bestelling> getAlleBestellingenPerKlant(Klant klant) throws Exception;
 	
-	public void changeStatusBestelling(Bestelling bestelling, Status status) throws ExceptionIO;
+	public void changeStatusBestelling(Bestelling bestelling, Status status) throws Exception;
 
 }

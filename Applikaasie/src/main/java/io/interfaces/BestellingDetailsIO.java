@@ -9,8 +9,8 @@ import util.ExceptionIO;
 
 public interface BestellingDetailsIO {
 	 
-	public void maakBestellingDetails(Bestelling bestelling, Integer bestellingId) throws ExceptionIO;
+	public void maakBestellingDetails(Bestelling bestelling, Integer bestellingId) throws Exception;
 	
-	public ArrayList<ArrayList<String>> getBestellingsDetails(Bestelling bestelling) throws ExceptionIO;
+	public ArrayList<ArrayList<String>> getBestellingsDetails(Bestelling bestelling) throws Exception;
 	
 }

@@ -40,7 +40,7 @@ public class ArtikelMaken {
 				textFieldKaasNaam.clear();
 				textFieldPrijsInKg.clear();
 				textFieldVooraadInKg.clear();
-			} catch (ExceptionFormatNumbers | ExceptionIO e1) {
+			} catch (Exception e1) {
 				e1.printStackTrace();
 			}
 		});

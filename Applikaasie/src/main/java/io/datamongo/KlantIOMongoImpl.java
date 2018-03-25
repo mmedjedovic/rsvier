@@ -14,6 +14,7 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
+import com.mongodb.DBObject;
 
 import io.data.Connector;
 import io.interfaces.KlantIO;
@@ -25,24 +26,27 @@ import util.ExceptionIOMongo;
 public class KlantIOMongoImpl implements KlantIO{
 	
 	DB db = null;
-	DBCollection klantTable = null;
+	DBCollection collection = null;
 	
 	public KlantIOMongoImpl() throws ExceptionIOMongo {
 		this.db = ConnectorMongo.getInstance().getDatabase();
-		this.klantTable = db.getCollection("klant");
+		this.collection = db.getCollection("klant");
 	}	
 	
 	@Override
 	public Integer maakNieuweKlant(Klant klant, Adres adres) {
 		BasicDBObject document = new BasicDBObject();
+		Integer klantId = createKlantId(collection);
 		document.put("voornaam", klant.getVoornaam());
 		document.put("achternaam", klant.getAchternaam());
+		document.put("klantId", klantId);
 		document.put("adres", new BasicDBObject("straatnaam", adres.getStraatNaam()).
 												append("huisnummer", adres.getHuisnummer()).
 												append("toevoegingsnummer", adres.getToevoegingHuisnummer()).
 												append("postcode", adres.getPostcode()).
-												append("woonplaats", adres.getWoonplaats()));
-		klantTable.insert(document);
+												append("woonplaats", adres.getWoonplaats()).
+												append("klantId", klantId));
+		collection.insert(document);
 		return 1;
 	}
 	
@@ -53,20 +57,32 @@ public class KlantIOMongoImpl implements KlantIO{
 	
 	@Override
 	public void deleteKlant(Integer klantId) throws ExceptionIO {
-		klantTable.remove(new BasicDBObject("_id", klantId));
+		collection.remove(new BasicDBObject("klantId", klantId));
 	}
 	
 	@Override
 	public ArrayList<Klant> getKlanten() throws ExceptionIO {
 		ArrayList<Klant> arrayListKlant = new ArrayList<Klant>();
-		DBCursor cursor  = klantTable.find();
+		DBCursor cursor  = collection.find();
 		while(cursor.hasNext()) {
 			BasicDBObject document = (BasicDBObject) cursor.next();
 			Klant klant = new Klant.KlantBuilder(document.getString("voornaam"), document.getString("achternaam"))
-																				.idKlant(document.getInt("_id")).build();
+												.idKlant(document.getInt("klantId")).build();
 			arrayListKlant.add(klant);
 		}
 		return arrayListKlant;
+	}
+	
+	private Integer createKlantId(DBCollection collection) {
+		DBCursor cursor = collection.find().sort(new BasicDBObject("klantId", -1)).limit(1);
+		Integer klantId = 1;
+		if(cursor.size() == 0) {
+			return klantId;
+		} else {
+			BasicDBObject klantdb = (BasicDBObject) cursor.next();
+			return klantdb.getInt("klantId") + 1;
+		}
+			
 	}
 	
 }

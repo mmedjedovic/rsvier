@@ -27,7 +27,7 @@ public class BestellingOverzichtMaken {
 	Applikaasie applikaasie;
 	ArrayList<Klant> klantLijst;
 	
-	public BestellingOverzichtMaken(Stage homeStage, Scene homeScene, Applikaasie applikaasie) throws ExceptionIO {
+	public BestellingOverzichtMaken(Stage homeStage, Scene homeScene, Applikaasie applikaasie) throws Exception {
 		this.homeStage = homeStage;
 		this.homeScene = homeScene;
 		this.applikaasie =applikaasie;
@@ -109,7 +109,7 @@ public class BestellingOverzichtMaken {
 																						statusCombo.getSelectionModel().getSelectedItem());
 				BestellingOverizicht bestellingOverzicht = new BestellingOverizicht(homeStage, homeScene, this.getBestellingOverzichtMakenScene(), applikaasie, bestellinglijst);
 				homeStage.setScene(bestellingOverzicht.getBestellingOverzicht());
-			} catch (ExceptionIO e1) {
+			} catch (Exception e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}

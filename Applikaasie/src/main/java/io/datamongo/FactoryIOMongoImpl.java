@@ -23,7 +23,7 @@ public class FactoryIOMongoImpl implements FactoryIO {
 	
 	
 	@Override
-	public AdresIO getAdresIO() {
+	public AdresIO getAdresIO() throws ExceptionIOMongo {
 		return (AdresIO) new AdresIOMongoImpl();
 	}
 	
@@ -43,14 +43,8 @@ public class FactoryIOMongoImpl implements FactoryIO {
 	}
 
 	@Override
-	public KlantIO getKlantIO() {
-		KlantIO klantIo = null;
-		try {
-			klantIo = new KlantIOMongoImpl();
-		} catch (ExceptionIOMongo e) {
-			e.printStackTrace();
-		}
-		return klantIo;
+	public KlantIO getKlantIO() throws ExceptionIOMongo {
+		return new KlantIOMongoImpl();
 	}
 
 }

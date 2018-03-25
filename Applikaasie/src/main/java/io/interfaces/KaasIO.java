@@ -9,14 +9,14 @@ import util.ExceptionIO;
 
 public interface KaasIO {
 	
-	public void nieuweKaasMaken(Kaas kaas) throws ExceptionIO;
+	public void nieuweKaasMaken(Kaas kaas) throws Exception;
 	
-	public Kaas getKaas(Integer kaasId) throws ExceptionIO;
+	public Kaas getKaas(Integer kaasId) throws Exception;
 	
-	public ArrayList<Kaas> getKazenLijst() throws ExceptionIO;
+	public ArrayList<Kaas> getKazenLijst() throws Exception;
 	
-	public void deleteKaas(Integer kaasId) throws ExceptionIO;
+	public void deleteKaas(Integer kaasId) throws Exception;
 	
-	public void vooraadAanpassen(Kaas kaas, BigDecimal nieuweVooraad, Connection con) throws ExceptionIO;
+	public void vooraadAanpassen(Kaas kaas, BigDecimal nieuweVooraad, Connection con) throws Exception;
 	
 }

@@ -80,7 +80,12 @@ public class BestellingMaken {
 		hBoxButton.setPadding(new Insets(15, 15, 15, 15));
 		hBoxButton.setSpacing(5);
 		//Ophalen kaas uit databse
-		kaasLijst = applikaasie.getKaasLijst();
+		try {
+			kaasLijst = applikaasie.getKaasLijst();
+		} catch (Exception e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
 		
 		if(!kaasLijst.isEmpty()) {
 			for(Kaas kaas: kaasLijst) {
@@ -157,7 +162,7 @@ public class BestellingMaken {
 			try {
 				applikaasie.bestellingMaken(besteldeKazenLijst, klant);
 				homeStage.setScene(homeScene);
-			} catch (ExceptionIO e1) {
+			} catch (Exception e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}

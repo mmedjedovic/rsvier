@@ -33,7 +33,7 @@ public class Applikaasie {
 		
 		
 		public void maakNieuweKlantenAdres(String voornaam, String achternaam, String straatNaam, 
-				String huisnummer, String toevoegingHuisnummer, String postcode, String woonplaats) throws ExceptionIO {
+				String huisnummer, String toevoegingHuisnummer, String postcode, String woonplaats) throws Exception {
 			Klant klant = new Klant.KlantBuilder(voornaam, achternaam).build();
 			KlantIO klantIo = factoryIo.getKlantIO();
 			Adres adres = new Adres.AdresBuilder(0).straatNaam(straatNaam).huisnummer(huisnummer).
@@ -45,38 +45,38 @@ public class Applikaasie {
 			
 		}
 		
-		public ArrayList<Klant> getKlantenLijst() throws ExceptionIO {
+		public ArrayList<Klant> getKlantenLijst() throws Exception {
 			return factoryIo.getKlantIO().getKlanten();
 		}
 		
-		public void deleteKlant(Integer klantId) throws ExceptionIO {
+		public void deleteKlant(Integer klantId) throws Exception {
 			factoryIo.getKlantIO().deleteKlant(klantId);
 		}
 		
-		public Adres getAdres(Integer klantId) throws ExceptionIO {
+		public Adres getAdres(Integer klantId) throws Exception {
 			return factoryIo.getAdresIO().getAdres(klantId);
 		}
 		
-		public void artikelMaken(String kaasNaam, Double prijsInKg, Double voorraadInKg) throws ExceptionIO {
+		public void artikelMaken(String kaasNaam, Double prijsInKg, Double voorraadInKg) throws Exception {
 			BigDecimal prijsInKgBigDec = BigDecimal.valueOf(prijsInKg);
 			BigDecimal vooraadInKgBigdec = BigDecimal.valueOf(voorraadInKg);
 			Kaas kaas = new Kaas.KaasBuilder(kaasNaam).prijsInKg(prijsInKgBigDec).vooraadInKg(vooraadInKgBigdec).build();
 			factoryIo.getKaasIO().nieuweKaasMaken(kaas);
 		}
 		
-		public Kaas getKaas(int kaasId) throws ExceptionIO {
+		public Kaas getKaas(int kaasId) throws Exception {
 			return factoryIo.getKaasIO().getKaas(kaasId);
 		}
 		
-		public void deleteKaas(Integer kaasId) throws ExceptionIO {
+		public void deleteKaas(Integer kaasId) throws Exception {
 			factoryIo.getKaasIO().deleteKaas(kaasId);
 		}
 		
-		public ArrayList<Kaas> getKaasLijst() throws ExceptionIO {
+		public ArrayList<Kaas> getKaasLijst() throws Exception {
 			return factoryIo.getKaasIO().getKazenLijst();
 		}
 		
-		public void bestellingMaken(HashMap<Kaas, BigDecimal> besteldeKazenLijst, Klant klant) throws ExceptionIO {
+		public void bestellingMaken(HashMap<Kaas, BigDecimal> besteldeKazenLijst, Klant klant) throws Exception {
 			BigDecimal totaalPrijs = new BigDecimal(0);
 			Date date = new Date();
 			for(Map.Entry<Kaas, BigDecimal> entry: besteldeKazenLijst.entrySet()) {
@@ -88,7 +88,7 @@ public class Applikaasie {
 			factoryIo.getBestellingsDetailsIO().maakBestellingDetails(bestelling, bestellingId);
 		}
 		
-		public ArrayList<Bestelling> getBestellingen(Klant klant, String status) throws ExceptionIO {
+		public ArrayList<Bestelling> getBestellingen(Klant klant, String status) throws Exception {
 			ArrayList<Bestelling> bestellingLijst = new ArrayList<Bestelling>();
 			BestellingTotaalIO bestellingTotaalIO = factoryIo.getBestllingTotaalIO();
 			if(status.equals("open")) {
@@ -101,11 +101,11 @@ public class Applikaasie {
 			return bestellingLijst;
 		}
 		
-		public ArrayList<ArrayList<String>> getBestellingDetails(Bestelling bestelling) throws ExceptionIO {
+		public ArrayList<ArrayList<String>> getBestellingDetails(Bestelling bestelling) throws Exception {
 			return factoryIo.getBestellingsDetailsIO().getBestellingsDetails(bestelling);
 		}
 		
-		public void changeStausBestelling(Bestelling bestelling, Status status) throws ExceptionIO {
+		public void changeStausBestelling(Bestelling bestelling, Status status) throws Exception {
 			factoryIo.getBestllingTotaalIO().changeStatusBestelling(bestelling, status);
 		}
 	

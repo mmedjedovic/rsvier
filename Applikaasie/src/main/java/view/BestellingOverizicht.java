@@ -64,7 +64,7 @@ public class BestellingOverizicht {
 					applikaasie.changeStausBestelling(selectedBestelling, Status.OPEN);
 				}
 				homeStage.setScene(bestellingOverzichtMakenScene);
-			} catch (ExceptionIO e1) {
+			} catch (Exception e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
@@ -112,7 +112,7 @@ public class BestellingOverizicht {
 				bestellingDetailsLijst = applikaasie.getBestellingDetails(selectedBestelling);
 				GridPane gridPaneDetails = maakDetailOverzicht(bestellingDetailsLijst, applikaasie);
 				borderPane.setBottom(gridPaneDetails);
-			} catch (ExceptionIO e1) {
+			} catch (Exception e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
@@ -138,17 +138,25 @@ public class BestellingOverizicht {
 		GridPane gridPaneDetails = new GridPane();
 		for(int row = 0; row < bestellingDetailsLijst.size(); row++) {
 			ArrayList<String> detailList = bestellingDetailsLijst.get(row);
-			Kaas kaas = applikaasie.getKaas(Integer.parseInt(detailList.get(0)));
-			//detailsoverzicht in elkaar maken
-			gridPaneDetails.setPadding(new Insets(10, 10, 10, 10));
-			gridPaneDetails.setVgap(5);
-			gridPaneDetails.setHgap(5);
-			gridPaneDetails.add(new Label("Kaas naam: "), 0, row);
-			gridPaneDetails.add(new TextField(kaas.getNaam()), 1, row);
-			gridPaneDetails.add(new Label("Bestelde hoeveelheid in kg: "), 2, row);
-			gridPaneDetails.add(new TextField(detailList.get(1)), 3, row);
-			gridPaneDetails.add(new Label("Prijs in euro: "), 4, row);
-			gridPaneDetails.add(new TextField(detailList.get(2)), 5, row);
+			Kaas kaas;
+			try {
+				kaas = applikaasie.getKaas(Integer.parseInt(detailList.get(0)));
+			
+				//detailsoverzicht in elkaar maken
+				gridPaneDetails.setPadding(new Insets(10, 10, 10, 10));
+				gridPaneDetails.setVgap(5);
+				gridPaneDetails.setHgap(5);
+				gridPaneDetails.add(new Label("Kaas naam: "), 0, row);
+				gridPaneDetails.add(new TextField(kaas.getNaam()), 1, row);
+				gridPaneDetails.add(new Label("Bestelde hoeveelheid in kg: "), 2, row);
+				gridPaneDetails.add(new TextField(detailList.get(1)), 3, row);
+				gridPaneDetails.add(new Label("Prijs in euro: "), 4, row);
+				gridPaneDetails.add(new TextField(detailList.get(2)), 5, row);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 		}
 		return gridPaneDetails;
 	}
