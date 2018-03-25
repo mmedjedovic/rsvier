@@ -1,5 +1,6 @@
 package io.datamongo;
 
+import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
@@ -28,14 +29,14 @@ public class AdresIOMongoImpl implements AdresIO{
 
 	@Override
 	public Adres getAdres(Integer klantId) throws ExceptionIO {
-		DBCursor cursor = collection.find(new BasicDBObject("adres", new BasicDBObject("_id", klantId))).limit(1);
-		DBObject adresdb = cursor.next();
+		DBCursor cursor = collection.find(new BasicDBObject("klantId", klantId));
+		DBObject klantdb = cursor.next();
+		DBObject adresdb = (DBObject) klantdb.get("adres");
 		Adres adres = new Adres.AdresBuilder(klantId).straatNaam((String) adresdb.get("straatnaam"))
 										.huisnummer((String) adresdb.get("huisnummer"))
-										.toevoegingHuisnummer((String) adresdb.get("toevoeginguisnummer"))
+										.toevoegingHuisnummer((String) adresdb.get("toevoegingsnummer"))
 										.postcode((String) adresdb.get("postcode"))
-										.woonplaats((String) adresdb.get("woonlaats")).build();
-										
+										.woonplaats((String) adresdb.get("woonplaats")).build();									
 		return adres;	
 	}
 	

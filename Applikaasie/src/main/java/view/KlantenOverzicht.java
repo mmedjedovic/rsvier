@@ -136,7 +136,7 @@ public class KlantenOverzicht {
 				adresGridPane.add(new Label(adres.getToevoegingHuisnummer()), 1, 2);
 				adresGridPane.add(new Label("Postcode:"), 0, 3);
 				adresGridPane.add(new Label(adres.getPostcode()), 1, 3);
-				adresGridPane.add(new Label("Huisnummer:"), 0, 4);
+				adresGridPane.add(new Label("Woonplaats:"), 0, 4);
 				adresGridPane.add(new Label(adres.getWoonplaats()), 1, 4);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
