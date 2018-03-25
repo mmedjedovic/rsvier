@@ -15,6 +15,7 @@ import io.data.BestellingTotaalIOImpl;
 import io.data.FactoryIOImpl;
 import io.data.KaasIOImpl;
 import io.data.KlantIOImpl;
+import io.datamongo.FactoryIOMongoImpl;
 import io.interfaces.AdresIO;
 import io.interfaces.BestellingTotaalIO;
 import io.interfaces.FactoryIO;
@@ -28,18 +29,20 @@ import util.ExceptionIO;
 public class Applikaasie {
 	
 	
-		FactoryIO factoryIo = FactoryIOImpl.gestInstance();
+		FactoryIO factoryIo = FactoryIOMongoImpl.getInstance();
 		
 		
 		public void maakNieuweKlantenAdres(String voornaam, String achternaam, String straatNaam, 
 				String huisnummer, String toevoegingHuisnummer, String postcode, String woonplaats) throws ExceptionIO {
 			Klant klant = new Klant.KlantBuilder(voornaam, achternaam).build();
 			KlantIO klantIo = factoryIo.getKlantIO();
-			Integer klantId = klantIo.maakNieuweKlant(klant);
-			Adres adres = new Adres.AdresBuilder(klantId).straatNaam(straatNaam).huisnummer(huisnummer).
+			Adres adres = new Adres.AdresBuilder(0).straatNaam(straatNaam).huisnummer(huisnummer).
 					toevoegingHuisnummer(toevoegingHuisnummer).postcode(postcode).woonplaats(woonplaats).build();
+			Integer klantId = klantIo.maakNieuweKlant(klant, adres);
+			adres.setKlantId(klantId);
 			AdresIO adresIo = factoryIo.getAdresIO();
 			adresIo.maakNieuweAdres(adres);
+			
 		}
 		
 		public ArrayList<Klant> getKlantenLijst() throws ExceptionIO {

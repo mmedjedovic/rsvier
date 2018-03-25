@@ -9,11 +9,11 @@ import io.interfaces.KlantIO;
 
 public class FactoryIOImpl implements FactoryIO{
 	
-	private static FactoryIOImpl instance = null;
+	private static FactoryIO instance = null;
 	
 	private FactoryIOImpl() {}
 	
-	public static FactoryIOImpl gestInstance() {
+	public static FactoryIO gestInstance() {
 		if(instance == null) {
 			instance = new FactoryIOImpl();
 		}

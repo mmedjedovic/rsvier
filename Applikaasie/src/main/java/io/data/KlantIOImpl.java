@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.*;
 
 import io.interfaces.KlantIO;
+import model.Adres;
 import model.Klant;
 import util.ExceptionIO;
 
@@ -17,7 +18,7 @@ public class KlantIOImpl implements KlantIO{
 	
 	//een nieuwe klant in databse maken
 	@Override
-	public Integer maakNieuweKlant(Klant klant) throws ExceptionIO {
+	public Integer maakNieuweKlant(Klant klant, Adres adres) throws ExceptionIO {
 		String sql = "INSERT INTO klant (voornaam, achternaam) VALUES (?, ?)";
 		Integer klantId = null;
 		try(Connection con = Connector.getInstance().getConnection(); PreparedStatement ps = con.prepareStatement(sql);) {

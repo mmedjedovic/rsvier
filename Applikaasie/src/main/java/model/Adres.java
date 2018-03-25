@@ -2,7 +2,7 @@ package model;
 
 public class Adres {
 	
-	private final Integer klantId;
+	private Integer klantId;
 	private final String straatNaam;
 	private final String huisnummer;
 	private final String toevoegingHuisnummer;
@@ -86,6 +86,10 @@ public class Adres {
 
 	public String getWoonplaats() {
 		return woonplaats;
+	}
+	
+	public void setKlantId(Integer klantId) {
+		this.klantId = klantId;
 	}
 
 
